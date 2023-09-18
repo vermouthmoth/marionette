@@ -1,7 +1,7 @@
 // specify your keyboard
 // for example, in my case, i have
-//#define DEVICE "/dev/input/by-id/usb-04d9_USB-HID_Keyboard-event-kbd"
-#define DEVICE "/path/to/your/keyboard"
+#define DEVICE "/dev/input/by-id/usb-PFU_Limited_HHKB-Hybrid-event-kbd"
+//#define DEVICE "/path/to/your/keyboard"
 
 // to change the key settings, edit KEY_*
 // for example,
