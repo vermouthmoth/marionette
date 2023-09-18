@@ -69,6 +69,8 @@ In this mode, you can scroll up and down with the `UP_KEY` and `DOWN_KEY`, and r
 
 In both pointer and scrolling modes, the keyboard does not provide any output as a keyboard.
 
+To terminate, just use `Ctrl+C` or `kill`.
+
 ## License
 MIT License Copyright (c) 2023 VermouthMoth
 
