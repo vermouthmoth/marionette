@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <math.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
@@ -164,14 +165,49 @@ void move_pointer(void)
    else
       value = POINTER_MOVEMENT_SPEED;
 
-   if (keydown_flags[UP_KEY])
+   if (keydown_flags[UP_KEY]
+    && keydown_flags[RIGHT_KEY])      // up-right
+   {
+      // prevent diagonal movement from being faster
+      // than vertical or horizontal movement
+      value = (int) value / sqrt(2);
       uinput_write_event(EV_REL, REL_Y, -value);
-   if (keydown_flags[DOWN_KEY])
-      uinput_write_event(EV_REL, REL_Y, +value);
-   if (keydown_flags[RIGHT_KEY])
       uinput_write_event(EV_REL, REL_X, +value);
-   if (keydown_flags[LEFT_KEY])
+   }
+   else if (keydown_flags[RIGHT_KEY]
+         && keydown_flags[DOWN_KEY])  // right-down
+   {
+      value = (int) value / sqrt(2);
+      uinput_write_event(EV_REL, REL_X, +value);
+      uinput_write_event(EV_REL, REL_Y, +value);
+   }
+   else if (keydown_flags[DOWN_KEY]
+         && keydown_flags[LEFT_KEY])  // down-left
+   {
+      value = (int) value / sqrt(2);
+      uinput_write_event(EV_REL, REL_Y, +value);
       uinput_write_event(EV_REL, REL_X, -value);
+   }
+   else if (keydown_flags[LEFT_KEY]
+         && keydown_flags[UP_KEY])    // left-up
+   {
+      value = (int) value / sqrt(2);
+      uinput_write_event(EV_REL, REL_X, -value);
+      uinput_write_event(EV_REL, REL_Y, -value);
+   }
+   else
+   {
+      // stop when two keys in opposite directions are pressed
+      // at the same time
+      if (keydown_flags[UP_KEY])      // up
+         uinput_write_event(EV_REL, REL_Y, -value);
+      if (keydown_flags[RIGHT_KEY])   // right
+         uinput_write_event(EV_REL, REL_X, +value);
+      if (keydown_flags[DOWN_KEY])    // down
+         uinput_write_event(EV_REL, REL_Y, +value);
+      if (keydown_flags[LEFT_KEY])    // left
+         uinput_write_event(EV_REL, REL_X, -value);
+   }
 }
 
 _Noreturn void *pointer_loop(void *arg)
