@@ -286,6 +286,10 @@ int main(int argc, char *argv[])
    if (ret < 0)
       cleanup("[E] Failed to initiate libevdev", ret);
 
+   // wait a bit to avoid unnecessary trouble
+   // hope all the keys are released during this time...
+   usleep(500000); // [us]
+
    // send all events from device through uinput device,
    // which will be newly created a little later
    ret = libevdev_grab(dev, LIBEVDEV_GRAB);
