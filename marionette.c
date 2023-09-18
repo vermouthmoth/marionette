@@ -99,11 +99,11 @@ void handle_event(struct input_event ev)
    {
       if (keydown_flags[POINTER_MODE_KEY])
       {
-         if (ev.type == EV_KEY && ev.code == MOUSE_LEFT_KEY)
+         if (ev.type == EV_KEY && ev.code == MOUSE_LEFT_BUTTON)
             uinput_write_event(EV_KEY, BTN_LEFT, ev.value);
-         if (ev.type == EV_KEY && ev.code == MOUSE_RIGHT_KEY)
+         if (ev.type == EV_KEY && ev.code == MOUSE_RIGHT_BUTTON)
             uinput_write_event(EV_KEY, BTN_RIGHT, ev.value);
-         if (ev.type == EV_KEY && ev.code == MOUSE_MIDDLE_KEY)
+         if (ev.type == EV_KEY && ev.code == MOUSE_MIDDLE_BUTTON)
             uinput_write_event(EV_KEY, BTN_MIDDLE, ev.value);
       }
    }
@@ -149,9 +149,9 @@ void move_pointer(void)
 {
    // on the monitor,
    //
-   //  N
-   // W+E-------> REL_X > 0
-   //  S
+   //  U
+   // L+R-------> REL_X > 0
+   //  D
    //  |
    //  |
    //  |
@@ -164,13 +164,13 @@ void move_pointer(void)
    else
       value = POINTER_MOVEMENT_SPEED;
 
-   if (keydown_flags[NORTH_KEY])
+   if (keydown_flags[UP_KEY])
       uinput_write_event(EV_REL, REL_Y, -value);
-   if (keydown_flags[SOUTH_KEY])
+   if (keydown_flags[DOWN_KEY])
       uinput_write_event(EV_REL, REL_Y, +value);
-   if (keydown_flags[EAST_KEY])
+   if (keydown_flags[RIGHT_KEY])
       uinput_write_event(EV_REL, REL_X, +value);
-   if (keydown_flags[WEST_KEY])
+   if (keydown_flags[LEFT_KEY])
       uinput_write_event(EV_REL, REL_X, -value);
 }
 
@@ -197,18 +197,18 @@ void scroll(void)
    //  |
    //  |
    //  |
-   //  N
-   // W+E-------> REL_HWHEEL > 0
-   //  S
+   //  U
+   // L+R-------> REL_HWHEEL > 0
+   //  D
    //
 
-   if (keydown_flags[NORTH_KEY])
+   if (keydown_flags[UP_KEY])
       uinput_write_event(EV_REL, REL_WHEEL, +SCROLLING_SPEED);
-   if (keydown_flags[SOUTH_KEY])
+   if (keydown_flags[DOWN_KEY])
       uinput_write_event(EV_REL, REL_WHEEL, -SCROLLING_SPEED);
-   if (keydown_flags[EAST_KEY])
+   if (keydown_flags[RIGHT_KEY])
       uinput_write_event(EV_REL, REL_HWHEEL, +SCROLLING_SPEED);
-   if (keydown_flags[WEST_KEY])
+   if (keydown_flags[LEFT_KEY])
       uinput_write_event(EV_REL, REL_HWHEEL, -SCROLLING_SPEED);
 }
 

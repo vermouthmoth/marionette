@@ -11,17 +11,17 @@
 // https://gitlab.freedesktop.org/libevdev/libevdev/-/blob/master/include/linux/linux/input-event-codes.h?ref_type=heads#L75
 
 #define POINTER_MODE_KEY KEY_RIGHTCTRL
-#define NORTH_KEY KEY_W
-#define SOUTH_KEY KEY_S
-#define EAST_KEY KEY_D
-#define WEST_KEY KEY_A
+#define UP_KEY KEY_W
+#define DOWN_KEY KEY_S
+#define RIGHT_KEY KEY_D
+#define LEFT_KEY KEY_A
 #define POINTER_MOVEMENT_SPEED 3 // must be a positive integer
 #define SPEEDUP_KEY KEY_SLASH
 #define SPEEDUP_FACTOR 3 // must be a positive integer
 
-#define MOUSE_LEFT_KEY KEY_COMMA
-#define MOUSE_RIGHT_KEY KEY_DOT
-#define MOUSE_MIDDLE_KEY KEY_M
+#define MOUSE_LEFT_BUTTON KEY_COMMA
+#define MOUSE_RIGHT_BUTTON KEY_DOT
+#define MOUSE_MIDDLE_BUTTON KEY_M
 
 #define SCROLLING_MODE_KEY KEY_RIGHTSHIFT
 #define SCROLLING_SPEED 3 // must be a positive integer
