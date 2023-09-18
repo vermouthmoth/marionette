@@ -29,14 +29,14 @@ UP_KEY | KEY_W | Key to move the pointer up (in pointer mode)<br>Key to scroll u
 DOWN_KEY | KEY_S | Key to move the pointer down (in pointer mode)<br>Key to scroll down (in scrolling mode)
 RIGHT_KEY | KEY_D | Key to move the pointer right (in pointer mode)<br>Key to scroll right (in scrolling mode)
 LEFT_KEY | KEY_A | Key to move the pointer left (in pointer mode)<br>Key to scroll left (in scrolling mode)
-POINTER_MOVEMENT_SPEED | 3 | Pointer movement speed, must be a positive integer
+POINTER_MOVEMENT_SPEED | 2 | Pointer movement speed, must be a positive integer
 SPEEDUP_KEY | KEY_SLASH | Key that increases the speed of the pointer only while being pushed down
-SPEEDUP_FACTOR | 3 | Pointer movement speed is multiplied by this value
+SPEEDUP_FACTOR | 5 | Pointer movement speed is multiplied by this value
 MOUSE_LEFT_BUTTON | KEY_COMMA | Key to left click (in pointer mode)
 MOUSE_RIGHT_BUTTON | KEY_DOT | Key to right click (in pointer mode)
 MOUSE_MIDDLE_BUTTON | KEY_M | Key to middle click (in pointer mode)
 SCROLLING_MODE_KEY | KEY_RIGHTSHIFT | Key to enter scrolling mode
-SCROLLING_SPEED | 3 | Scrolling speed, must be a positive integer
+SCROLLING_SPEED | 1 | Scrolling speed, must be a positive integer
 
 For example, if you want to change the key that enters pointer mode from `KEY_RIGHTCTRL` to `KEY_RIGHTALT`, edit as follows.
 ```
