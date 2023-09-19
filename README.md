@@ -9,8 +9,8 @@ Thus, it works **no matter what window system** you are using, e.g. `X Window Sy
 It even works on a non-graphical console.  
 For `libevdev`, see [https://www.freedesktop.org/wiki/Software/libevdev/](https://www.freedesktop.org/wiki/Software/libevdev/).
 
-This program consists of the following three files.
-- `marionette.c`: main source file
+This program consists of the following five files.
+- `marionette.c`, `event_loop.c` and `mouse.c`: source files
 - `config.h`: config file
 - `MakeFile`: makefile
 
@@ -87,7 +87,7 @@ To terminate, just use `Ctrl+C` or `kill`.
 MIT License Copyright (c) 2023 VermouthMoth
 
 ### Contact
-`0o.jx_xjzzz` on Discord
+[`0o.jx_xjzzz`](https://discordapp.com/users/1150388238037565541) on Discord
 ___
 _This tiny program was originally written just for my own use._  
 _**ANY** kind of your feedback is sincerely welcome._  
