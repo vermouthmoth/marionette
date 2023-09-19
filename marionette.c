@@ -27,6 +27,11 @@ struct libevdev *dev;
 struct libevdev_uinput *uidev;
 int keys_count;
 bool *keydown_flags;
+unsigned int const evrels_to_enable[]
+               = {REL_X, REL_Y,
+                  REL_WHEEL_HI_RES, REL_HWHEEL_HI_RES};
+unsigned int const evkeys_to_enable[]
+               = {BTN_LEFT, BTN_RIGHT, BTN_MIDDLE};
 
 void cleanup(char *msg, int ret)
 {
@@ -291,29 +296,22 @@ int main(int argc, char *argv[])
 
    // force enable the following event codes
    // to make uinput device inherit them
-   // REL_X, REL_Y, REL_WHEEL_HI_RES, REL_HWHEEL_HI_RES,
-   // BTN_LEFT, BTN_RIGHT and BTN_MIDDLE
-   ret = libevdev_enable_event_code(dev, EV_REL, REL_X, NULL);
-   if (ret < 0)
-      cleanup("[E] Failed to enable event code", ret);
-   ret = libevdev_enable_event_code(dev, EV_REL, REL_Y, NULL);
-   if (ret < 0)
-      cleanup("[E] Failed to enable event code", ret);
-   ret = libevdev_enable_event_code(dev, EV_REL, REL_WHEEL_HI_RES, NULL);
-   if (ret < 0)
-      cleanup("[E] Failed to enable event code", ret);
-   ret = libevdev_enable_event_code(dev, EV_REL, REL_HWHEEL_HI_RES, NULL);
-   if (ret < 0)
-      cleanup("[E] Failed to enable event code", ret);
-   ret = libevdev_enable_event_code(dev, EV_KEY, BTN_LEFT, NULL);
-   if (ret < 0)
-      cleanup("[E] Failed to enable event code", ret);
-   ret = libevdev_enable_event_code(dev, EV_KEY, BTN_RIGHT, NULL);
-   if (ret < 0)
-      cleanup("[E] Failed to enable event code", ret);
-   ret = libevdev_enable_event_code(dev, EV_KEY, BTN_MIDDLE, NULL);
-   if (ret < 0)
-      cleanup("[E] Failed to enable event code", ret);
+   for (int i = 0; i < sizeof(evrels_to_enable)/sizeof(unsigned int); i++)
+   {
+      // REL_X, REL_Y, REL_WHEEL_HI_RES and REL_HWHEEL_HI_RES
+      ret = libevdev_enable_event_code(dev, EV_REL,
+                                       evrels_to_enable[i], NULL);
+      if (ret < 0)
+         cleanup("[E] Failed to enable event code", ret);
+   }
+   for (int i = 0; i < sizeof(evkeys_to_enable)/sizeof(unsigned int); i++)
+   {
+      // BTN_LEFT, BTN_RIGHT and BTN_MIDDLE
+      ret = libevdev_enable_event_code(dev, EV_KEY,
+                                       evkeys_to_enable[i], NULL);
+      if (ret < 0)
+         cleanup("[E] Failed to enable event code", ret);
+   }
 
    ret = libevdev_uinput_create_from_device(dev, LIBEVDEV_UINPUT_OPEN_MANAGED, &uidev);
    if (ret < 0)
