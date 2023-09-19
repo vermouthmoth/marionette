@@ -224,28 +224,25 @@ _Noreturn void *pointer_loop(void *arg)
 
 void scroll(void)
 {
-   // difficult to fine-tune speed
-   // might be better to use *_HI_RES version for these event codes
-
    // on the monitor,
    //
-   //  ^ REL_WHEEL > 0
+   //  ^ REL_WHEEL_HI_RES > 0
    //  |
    //  |
    //  |
    //  U
-   // L+R-------> REL_HWHEEL > 0
+   // L+R-------> REL_HWHEEL_HI_RES > 0
    //  D
    //
 
    if (keydown_flags[UP_KEY])
-      uinput_write_event(EV_REL, REL_WHEEL, +SCROLLING_SPEED);
+      uinput_write_event(EV_REL, REL_WHEEL_HI_RES, +SCROLLING_SPEED);
    if (keydown_flags[DOWN_KEY])
-      uinput_write_event(EV_REL, REL_WHEEL, -SCROLLING_SPEED);
+      uinput_write_event(EV_REL, REL_WHEEL_HI_RES, -SCROLLING_SPEED);
    if (keydown_flags[RIGHT_KEY])
-      uinput_write_event(EV_REL, REL_HWHEEL, +SCROLLING_SPEED);
+      uinput_write_event(EV_REL, REL_HWHEEL_HI_RES, +SCROLLING_SPEED);
    if (keydown_flags[LEFT_KEY])
-      uinput_write_event(EV_REL, REL_HWHEEL, -SCROLLING_SPEED);
+      uinput_write_event(EV_REL, REL_HWHEEL_HI_RES, -SCROLLING_SPEED);
 }
 
 _Noreturn void *scrolling_loop(void *arg)
@@ -255,8 +252,8 @@ _Noreturn void *scrolling_loop(void *arg)
       if (keydown_flags[SCROLLING_MODE_KEY])
          scroll();
 
-      // equivalent to a polling rate of 20 Hz
-      usleep(50000); // [us]
+      // equivalent to a polling rate of 125 Hz
+      usleep(8000); // [us]
    }
 }
 
@@ -298,7 +295,7 @@ int main(int argc, char *argv[])
 
    // force enable the following event codes
    // to make uinput device inherit them
-   // REL_X, REL_Y, REL_WHEEL, REL_HWHEEL,
+   // REL_X, REL_Y, REL_WHEEL_HI_RES, REL_HWHEEL_HI_RES,
    // BTN_LEFT, BTN_RIGHT and BTN_MIDDLE
    ret = libevdev_enable_event_code(dev, EV_REL, REL_X, NULL);
    if (ret < 0)
@@ -306,10 +303,10 @@ int main(int argc, char *argv[])
    ret = libevdev_enable_event_code(dev, EV_REL, REL_Y, NULL);
    if (ret < 0)
       cleanup("[E] Failed to enable event code", ret);
-   ret = libevdev_enable_event_code(dev, EV_REL, REL_WHEEL, NULL);
+   ret = libevdev_enable_event_code(dev, EV_REL, REL_WHEEL_HI_RES, NULL);
    if (ret < 0)
       cleanup("[E] Failed to enable event code", ret);
-   ret = libevdev_enable_event_code(dev, EV_REL, REL_HWHEEL, NULL);
+   ret = libevdev_enable_event_code(dev, EV_REL, REL_HWHEEL_HI_RES, NULL);
    if (ret < 0)
       cleanup("[E] Failed to enable event code", ret);
    ret = libevdev_enable_event_code(dev, EV_KEY, BTN_LEFT, NULL);

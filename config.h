@@ -24,4 +24,4 @@
 #define MOUSE_MIDDLE_BUTTON KEY_M
 
 #define SCROLLING_MODE_KEY KEY_RIGHTSHIFT
-#define SCROLLING_SPEED 1 // must be a positive integer
+#define SCROLLING_SPEED 25 // must be a positive integer
