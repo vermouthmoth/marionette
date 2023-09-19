@@ -16,8 +16,8 @@
 #define RIGHT_KEY KEY_D
 #define LEFT_KEY KEY_A
 #define POINTER_MOVEMENT_SPEED 2 // must be a positive integer
-#define SPEEDUP_KEY KEY_SLASH
-#define SPEEDUP_FACTOR 5 // must be a positive integer
+#define POINTER_SPEEDUP_KEY KEY_SLASH
+#define POINTER_SPEEDUP_FACTOR 5 // must be a positive integer
 
 #define MOUSE_LEFT_BUTTON KEY_COMMA
 #define MOUSE_RIGHT_BUTTON KEY_DOT
@@ -25,3 +25,5 @@
 
 #define SCROLLING_MODE_KEY KEY_RIGHTSHIFT
 #define SCROLLING_SPEED 25 // must be a positive integer
+#define SCROLLING_SPEEDUP_KEY KEY_SLASH
+#define SCROLLING_SPEEDUP_FACTOR 2 // must be a positive integer

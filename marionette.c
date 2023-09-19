@@ -160,8 +160,8 @@ void move_pointer(void)
    //
 
    int value;
-   if (keydown_flags[SPEEDUP_KEY])
-      value = POINTER_MOVEMENT_SPEED * SPEEDUP_FACTOR;
+   if (keydown_flags[POINTER_SPEEDUP_KEY])
+      value = POINTER_MOVEMENT_SPEED * POINTER_SPEEDUP_FACTOR;
    else
       value = POINTER_MOVEMENT_SPEED;
 
@@ -235,14 +235,20 @@ void scroll(void)
    //  D
    //
 
+   int value;
+   if (keydown_flags[SCROLLING_SPEEDUP_KEY])
+      value = SCROLLING_SPEED * SCROLLING_SPEEDUP_FACTOR;
+   else
+      value = SCROLLING_SPEED;
+
    if (keydown_flags[UP_KEY])
-      uinput_write_event(EV_REL, REL_WHEEL_HI_RES, +SCROLLING_SPEED);
+      uinput_write_event(EV_REL, REL_WHEEL_HI_RES, +value);
    if (keydown_flags[DOWN_KEY])
-      uinput_write_event(EV_REL, REL_WHEEL_HI_RES, -SCROLLING_SPEED);
+      uinput_write_event(EV_REL, REL_WHEEL_HI_RES, -value);
    if (keydown_flags[RIGHT_KEY])
-      uinput_write_event(EV_REL, REL_HWHEEL_HI_RES, +SCROLLING_SPEED);
+      uinput_write_event(EV_REL, REL_HWHEEL_HI_RES, +value);
    if (keydown_flags[LEFT_KEY])
-      uinput_write_event(EV_REL, REL_HWHEEL_HI_RES, -SCROLLING_SPEED);
+      uinput_write_event(EV_REL, REL_HWHEEL_HI_RES, -value);
 }
 
 _Noreturn void *scrolling_loop(void *arg)
