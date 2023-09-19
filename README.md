@@ -55,7 +55,7 @@ For example, if you want to change the key that enters pointer mode from `KEY_RI
 For a list of available key codes, see [here](https://gitlab.freedesktop.org/libevdev/libevdev/-/blob/master/include/linux/linux/input-event-codes.h?ref_type=heads#L75), for example.  
 Note that they must be key codes that are actually supported by your keyboard.
 
-Whenever `config.h` is updated, run `make` afterwards.
+Whenever `config.h` is updated, run `make clean` and `make` afterwards.
 
 ## Usage
 ```
