@@ -1,7 +1,6 @@
 CFLAGS = $(shell pkg-config --cflags libevdev) -Wall
 LDFLAGS = $(shell pkg-config --libs libevdev)
 
-marionette: marionette.o config.h
-marionette.o: config.h
+marionette: $(wildcard *.c)
 clean:
-	rm -f marionette.o marionette
+	rm -f marionette
