@@ -267,10 +267,10 @@ int main(int argc, char *argv[])
       exit(EXIT_FAILURE);
    }
 
-   const char *file;
+   char const *file;
    file = argv[1];
    */
-   const char *file;
+   char const *file;
    file = DEVICE;
    fd = open(file, O_RDONLY);
    if (fd < 0)
@@ -317,10 +317,10 @@ int main(int argc, char *argv[])
    if (ret < 0)
       cleanup("[E] Failed to create uinput device", ret);
 
-   const char *uidev_syspath;
+   char const *uidev_syspath;
    uidev_syspath = libevdev_uinput_get_syspath(uidev);
    printf("[I] syspath for uinput device: %s\n", uidev_syspath);
-   const char *uidev_devnode;
+   char const *uidev_devnode;
    uidev_devnode = libevdev_uinput_get_devnode(uidev);
    printf("[I] device node for uinput device: %s\n", uidev_devnode);
 
