@@ -210,18 +210,6 @@ void move_pointer(void)
    }
 }
 
-_Noreturn void *pointer_loop(void *arg)
-{
-   for (;;)
-   {
-      if (keydown_flags[POINTER_MODE_KEY])
-         move_pointer();
-
-      // equivalent to a polling rate of 125 Hz
-      usleep(8000); // [us]
-   }
-}
-
 void scroll(void)
 {
    // on the monitor,
@@ -251,10 +239,12 @@ void scroll(void)
       uinput_write_event(EV_REL, REL_HWHEEL_HI_RES, -value);
 }
 
-_Noreturn void *scrolling_loop(void *arg)
+_Noreturn void *mouse_loop(void *arg)
 {
    for (;;)
    {
+      if (keydown_flags[POINTER_MODE_KEY])
+         move_pointer();
       if (keydown_flags[SCROLLING_MODE_KEY])
          scroll();
 
@@ -342,14 +332,11 @@ int main(int argc, char *argv[])
    keys_count = libevdev_event_type_get_max(EV_KEY);
    keydown_flags = (bool *)calloc(keys_count, sizeof(bool));
 
-   // create two threads for controlling pointer movement and scrolling
-   pthread_t pointer_loop_thread;
-   pthread_t scrolling_loop_thread;
-   pthread_create(&pointer_loop_thread, NULL, pointer_loop, NULL);
-   pthread_create(&scrolling_loop_thread, NULL, scrolling_loop, NULL);
+   // create a thread for controlling pointer movement and scrolling
+   pthread_t mouse_loop_thread;
+   pthread_create(&mouse_loop_thread, NULL, mouse_loop, NULL);
    // no plans to return
-   pthread_detach(pointer_loop_thread);
-   pthread_detach(scrolling_loop_thread);
+   pthread_detach(mouse_loop_thread);
 
    // also no plans to return without failure...
    // just use Ctrl+C or kill command to terminate
