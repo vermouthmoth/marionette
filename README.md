@@ -37,13 +37,15 @@ DOWN_KEY | KEY_S | Key to move the pointer down (in pointer mode)<br>Key to scro
 RIGHT_KEY | KEY_D | Key to move the pointer right (in pointer mode)<br>Key to scroll right (in scrolling mode)
 LEFT_KEY | KEY_A | Key to move the pointer left (in pointer mode)<br>Key to scroll left (in scrolling mode)
 POINTER_MOVEMENT_SPEED | 2 | Pointer movement speed, must be a positive integer
-SPEEDUP_KEY | KEY_SLASH | Key to increases the speed of the pointer only while being pushed down
-SPEEDUP_FACTOR | 5 | Pointer movement speed will be multiplied by this value
+POINTER_SPEEDUP_KEY | KEY_SLASH | Key to increases the speed of the pointer only while being pushed down
+POINTER_SPEEDUP_FACTOR | 5 | Pointer movement speed will be multiplied by this value
 MOUSE_LEFT_BUTTON | KEY_COMMA | Key to left click (in pointer mode)
 MOUSE_RIGHT_BUTTON | KEY_DOT | Key to right click (in pointer mode)
 MOUSE_MIDDLE_BUTTON | KEY_M | Key to middle click (in pointer mode)
 SCROLLING_MODE_KEY | KEY_RIGHTSHIFT | Key to activate scrolling mode while being pushed down
-SCROLLING_SPEED | 1 | Scrolling speed, must be a positive integer
+SCROLLING_SPEED | 25 | Scrolling speed, must be a positive integer
+SCROLLING_SPEEDUP_KEY | KEY_SLASH | Key to increases the speed of scrolling only while being pushed down
+SCROLLING_SPEEDUP_FACTOR | 2 | Scrolling speed will be multiplied by this value
 
 For example, if you want to change the key that enters pointer mode from `KEY_RIGHTCTRL` to `KEY_RIGHTALT`, edit as follows.
 ```
@@ -74,7 +76,8 @@ The `MOUSE_LEFT_BUTTON`, `MOUSE_RIGHT_BUTTON`, and `MOUSE_MIDDLE_BUTTON` allow y
 
 Press `SCROLLING_MODE_KEY` to activate scrolling mode.  
 Scrolling mode is activated only as long as the key is kept pressed.  
-In this mode, you can scroll up and down with the `UP_KEY` and `DOWN_KEY`, and right and left with the `RIGHT_KEY` and `LEFT_KEY`.
+In this mode, you can scroll up and down with the `UP_KEY` and `DOWN_KEY`, and right and left with the `RIGHT_KEY` and `LEFT_KEY`.  
+Pressing `SPEEDUP_KEY` while in this mode will increase the speed of scrolling for as long as you hold it down.
 
 In both pointer and scrolling modes, the keyboard does not provide any output as a keyboard.
 
