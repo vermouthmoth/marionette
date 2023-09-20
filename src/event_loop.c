@@ -4,18 +4,15 @@
 #include <libevdev/libevdev.h>
 #include <libevdev/libevdev-uinput.h>
 
+#include "../include/event_loop.h"
+#include "../include/marionette.h"
+
 #include "../include/config.h"
 
 //        s
 //      (o5o)
 //     /7(=)\_
 // VermouthMoth
-
-extern struct libevdev *dev;
-extern struct libevdev_uinput *uidev;
-extern int keys_count;
-
-extern void cleanup(char *msg, int ret);
 
 bool *keydown_flags;
 

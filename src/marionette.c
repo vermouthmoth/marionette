@@ -10,17 +10,16 @@
 #include <libevdev/libevdev.h>
 #include <libevdev/libevdev-uinput.h>
 
+#include "../include/marionette.h"
+#include "../include/event_loop.h"
+#include "../include/mouse.h"
+
 #include "../include/config.h"
 
 //        s
 //      (o5o)
 //     /7(=)\_
 // VermouthMoth
-
-extern bool *keydown_flags;
-
-extern void event_loop(void);
-extern _Noreturn void *mouse_loop(void *arg);
 
 static int fd;
 struct libevdev *dev;

@@ -4,18 +4,15 @@
 
 #include <libevdev/libevdev.h>
 
+#include "../include/mouse.h"
+#include "../include/event_loop.h"
+
 #include "../include/config.h"
 
 //        s
 //      (o5o)
 //     /7(=)\_
 // VermouthMoth
-
-extern bool *keydown_flags;
-
-extern void uinput_write_event(unsigned int type,
-                               unsigned int code,
-                                        int value);
 
 static void move_pointer(void)
 {
