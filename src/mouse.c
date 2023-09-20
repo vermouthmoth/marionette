@@ -4,7 +4,7 @@
 
 #include <libevdev/libevdev.h>
 
-#include "config.h"
+#include "../include/config.h"
 
 //        s
 //      (o5o)

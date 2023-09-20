@@ -1,6 +1,10 @@
-CFLAGS = $(shell pkg-config --cflags libevdev) -Wall
-LDFLAGS = $(shell pkg-config --libs libevdev)
+PROGRAM := marionette
+SOURCE  := ./src
+INCLUDE := -I./include/
+CFLAGS  := $(shell pkg-config --cflags libevdev) -Wall
+LDFLAGS := $(shell pkg-config --libs libevdev)
 
-marionette: $(wildcard *.c)
+$(PROGRAM): $(wildcard $(SOURCE)/*.c)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 clean:
-	rm -f marionette
+	rm -f $(PROGRAM)
