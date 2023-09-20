@@ -24,12 +24,12 @@ void uinput_write_event(unsigned int type, unsigned int code, int value)
    int ret;
    ret = libevdev_uinput_write_event(uidev, type, code, value);
    if (ret < 0)
-      cleanup("[E] Failed to write event", ret);
+      cleanup("[E] failed to write event", ret);
 
    // tell the device's listeners that the event is coming
    ret = libevdev_uinput_write_event(uidev, EV_SYN, SYN_REPORT, 0);
    if (ret < 0)
-      cleanup("[E] Failed to write event", ret);
+      cleanup("[E] failed to write event", ret);
 }
 
 static void check_keydown(struct input_event ev)
@@ -121,5 +121,5 @@ void event_loop(void)
          || ret == LIBEVDEV_READ_STATUS_SUCCESS
          || ret == -EAGAIN); // no events available at this time
 
-   cleanup("[E] Failed to handle event", ret);
+   cleanup("[E] failed to handle event", ret);
 }

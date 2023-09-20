@@ -51,14 +51,14 @@ int main(int argc, char *argv[])
    fd = open(file, O_RDONLY);
    if (fd < 0)
    {
-      perror("[E] Failed to open device");
+      perror("[E] failed to open device");
       exit(EXIT_FAILURE);
    }
 
    int ret;
    ret = libevdev_new_from_fd(fd, &dev);
    if (ret < 0)
-      cleanup("[E] Failed to initiate libevdev", ret);
+      cleanup("[E] failed to initiate libevdev", ret);
 
    // wait a bit to avoid unnecessary trouble
    // hope all the keys are released during this time...
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
    // which will be newly created a little later
    ret = libevdev_grab(dev, LIBEVDEV_GRAB);
    if (ret < 0)
-      cleanup("[E] Failed to grab device", ret);
+      cleanup("[E] failed to grab device", ret);
 
    // force enable the following event codes
    // to make uinput device inherit them
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
       ret = libevdev_enable_event_code(dev, EV_REL,
                                        evrels_to_enable[i], NULL);
       if (ret < 0)
-         cleanup("[E] Failed to enable event code", ret);
+         cleanup("[E] failed to enable event code", ret);
    }
    for (int i = 0; i < sizeof(evkeys_to_enable)/sizeof(unsigned int); i++)
    {
@@ -86,13 +86,13 @@ int main(int argc, char *argv[])
       ret = libevdev_enable_event_code(dev, EV_KEY,
                                        evkeys_to_enable[i], NULL);
       if (ret < 0)
-         cleanup("[E] Failed to enable event code", ret);
+         cleanup("[E] failed to enable event code", ret);
    }
 
    ret = libevdev_uinput_create_from_device(dev,
                                     LIBEVDEV_UINPUT_OPEN_MANAGED, &uidev);
    if (ret < 0)
-      cleanup("[E] Failed to create uinput device", ret);
+      cleanup("[E] failed to create uinput device", ret);
 
    char const *uidev_syspath;
    uidev_syspath = libevdev_uinput_get_syspath(uidev);
