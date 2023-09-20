@@ -11,7 +11,7 @@ For `libevdev`, see [https://www.freedesktop.org/wiki/Software/libevdev/](https:
 
 This program consists of the following directories and files.
 - `src/`: direcotory containing source files
-- `include/`: directory containing a config file of `config.h`
+- `include/`: directory containing header files and a config file of `config.h`
 - `MakeFile`: makefile
 
 ## Building
