@@ -9,9 +9,9 @@ Thus, it works **no matter what window system** you are using, e.g. `X Window Sy
 It even works on a non-graphical console.  
 For `libevdev`, see [https://www.freedesktop.org/wiki/Software/libevdev/](https://www.freedesktop.org/wiki/Software/libevdev/).
 
-This program consists of the following five files.
-- `marionette.c`, `event_loop.c` and `mouse.c`: source files
-- `config.h`: config file
+This program consists of the following directories and files.
+- `src/`: direcotory containing source files
+- `include/`: directory containing a config file of `config.h`
 - `MakeFile`: makefile
 
 ## Building
@@ -23,7 +23,7 @@ $ make
 `MakeFile` also supports `clean` target.
 
 ## Configuration
-Configuration is done using the `config.h`.  
+Configuration is done using the `include/config.h`.  
 The file is actually just a header file.  
 The configuration items and their values are written in the form of `#define item value`.  
 The configuration values are changed by editing `value`.  
@@ -55,7 +55,7 @@ For example, if you want to change the key that enters pointer mode from `KEY_RI
 For a list of available key codes, see [here](https://gitlab.freedesktop.org/libevdev/libevdev/-/blob/master/include/linux/linux/input-event-codes.h?ref_type=heads#L75), for example.  
 Note that they must be key codes that are actually supported by your keyboard.
 
-Whenever `config.h` is updated, run `make clean` and `make` afterwards.
+Whenever `include/config.h` is updated, run `make clean` and `make` afterwards.
 
 ## Usage
 ```
