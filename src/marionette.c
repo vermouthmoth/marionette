@@ -11,10 +11,9 @@
 #include <libevdev/libevdev-uinput.h>
 
 #include "../include/marionette.h"
+#include "../include/setup.h"
 #include "../include/event_loop.h"
 #include "../include/mouse.h"
-
-#include "../include/config.h"
 
 //        s
 //      (o5o)
@@ -45,9 +44,17 @@ void cleanup(char *msg, int ret)
 
 int main(int argc, char *argv[])
 {
-   char const *file;
-   file = DEVICE;
-   fd = open(file, O_RDONLY);
+   if (argc < 2)
+   {
+      fprintf(stderr, "[E] no config file specified: $ sudo ./marionette config/your_config.xml\n");
+      exit(EXIT_FAILURE);
+   }
+   char const *config_file = argv[1];
+
+   setup(config_file);
+
+   printf("[I] start opening device: %s\n", DEVICE);
+   fd = open(DEVICE, O_RDONLY);
    if (fd < 0)
    {
       perror("[E] failed to open device");

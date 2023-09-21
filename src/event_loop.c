@@ -6,8 +6,7 @@
 
 #include "../include/event_loop.h"
 #include "../include/marionette.h"
-
-#include "../include/config.h"
+#include "../include/setup.h"
 
 //        s
 //      (o5o)

@@ -5,9 +5,8 @@
 #include <libevdev/libevdev.h>
 
 #include "../include/mouse.h"
+#include "../include/setup.h"
 #include "../include/event_loop.h"
-
-#include "../include/config.h"
 
 //        s
 //      (o5o)
