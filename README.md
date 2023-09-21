@@ -9,6 +9,23 @@ Thus, it works **no matter what window system** you are using, e.g. `X Window Sy
 It even works on a non-graphical console.  
 For `libevdev`, see [https://www.freedesktop.org/wiki/Software/libevdev/](https://www.freedesktop.org/wiki/Software/libevdev/).
 
+> [!NOTE]  
+> The format of the config file has been changed from header file to XML file.  
+> The following contents are out of date and not yet compatible with the change.  
+> It will be rewritten in time to match the new change.  
+> An quick overview will be as follows.
+> ```
+> $ git clone https://github.com/vermouthmoth/marionette.git
+> $ cd marionette
+> $ make
+>
+> $ cd config
+> $ gen_config > config.xml
+>
+> $ cd ../
+> $ sudo ./marionette config/config.xml
+> ```
+
 This program consists of the following directories and files.
 - `src/`: direcotory containing source files
 - `include/`: directory containing header files and a config file of `config.h`
