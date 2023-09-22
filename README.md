@@ -19,10 +19,9 @@ For `libevdev`, see [https://www.freedesktop.org/wiki/Software/libevdev/](https:
 > $ cd marionette
 > $ make
 >
-> $ cd config
 > $ gen_config > config.xml
+> $ your_favorite_editor config.xnl
 >
-> $ cd ../
 > $ sudo ./marionette config/config.xml
 > ```
 
