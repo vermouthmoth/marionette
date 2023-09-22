@@ -10,9 +10,9 @@ LDFLAGS      := $(shell pkg-config --libs libevdev)
 LDFLAGS      += $(shell xml2-config --libs)
 
 all: $(PROGRAM) $(CONFIGURATOR)
-$(PROGRAM): $(wildcard $(SOURCE)/*.c)
+$(PROGRAM): $(filter-out $(SOURCE)/$(CONFIGURATOR).c, $(wildcard $(SOURCE)/*.c))
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
-$(CONFIGURATOR): $(wildcard $(CONFIGFILE)/*.c)
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $(CONFIGFILE)/$@ $^
+$(CONFIGURATOR): $(SOURCE)/$(CONFIGURATOR).c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 clean:
-	rm -f $(PROGRAM) $(CONFIGFILE)/$(CONFIGURATOR)
+	rm -f $(PROGRAM) $(CONFIGURATOR)
