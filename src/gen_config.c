@@ -12,10 +12,12 @@
 // $ gcc `xml2-config --cflags --libs` -o gen_config gen_config.c
 
 // generate and save config file template
-// $ ./gen_config > config.xml
+// if /path/to/config.dtd is not specified,
+// src/config.dtd is set as default
+// $ ./gen_config /path/to/config.dtd > config.xml
 
-// validate your edited config file
-// $ xmllint --noout --dtdvalid config.dtd config.xml
+// validate config file
+// $ xmllint --noout --valid config.xml
 
 #if defined(LIBXML_TREE_ENABLED) && defined(LIBXML_OUTPUT_ENABLED)
 
@@ -75,9 +77,17 @@ int main(int argc, char *argv[])
                                            BAD_CAST "config", NULL);
    xmlDocSetRootElement(doc, root_node);
 
-   // specify .dtd file
-   xmlCreateIntSubset(doc, BAD_CAST "config", NULL,
-                           BAD_CAST "config/config.dtd");
+   // laod config.dtd and add as internal dtd subset
+   char *dtd_file;
+   if (argc < 2)
+      dtd_file = "src/config.dtd";
+   else
+      dtd_file = argv[1];
+
+   xmlDtdPtr dtd = xmlParseDTD(NULL, BAD_CAST dtd_file);
+   dtd->name = BAD_CAST "config";
+   dtd->SystemID = NULL;
+   xmlAddPrevSibling(doc->children, (xmlNodePtr)dtd);
 
    // device
    xmlNodePtr device_node = xmlNewChild(root_node, NULL,
