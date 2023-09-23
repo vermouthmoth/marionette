@@ -61,17 +61,17 @@ The content of the config file template is as follows.
 ```xml
 $ cat config.xml
 <?xml version="1.0" encoding="ASCII"?>
-<!DOCTYPE config SYSTEM "config.dtd">
+<!DOCTYPE config SYSTEM "config/config.dtd">
 <config>
   <device>
     <DEVICE>/path/to/your/keyboard</DEVICE>
   </device>
   <pointer_mode>
     <POINTER_MODE_KEY>KEY_RIGHTCTRL</POINTER_MODE_KEY>
-    <UP_KEY>KEY_W</UP_KEY>
-    <DOWN_KEY>KEY_S</DOWN_KEY>
-    <RIGHT_KEY>KEY_D</RIGHT_KEY>
-    <LEFT_KEY>KEY_A</LEFT_KEY>
+    <POINTER_UP_KEY>KEY_W</POINTER_UP_KEY>
+    <POINTER_DOWN_KEY>KEY_S</POINTER_DOWN_KEY>
+    <POINTER_RIGHT_KEY>KEY_D</POINTER_RIGHT_KEY>
+    <POINTER_LEFT_KEY>KEY_A</POINTER_LEFT_KEY>
     <POINTER_MOVEMENT_SPEED>2</POINTER_MOVEMENT_SPEED>
     <POINTER_SPEEDUP_KEY>KEY_SLASH</POINTER_SPEEDUP_KEY>
     <POINTER_SPEEDUP_FACTOR>5</POINTER_SPEEDUP_FACTOR>
@@ -81,6 +81,10 @@ $ cat config.xml
   </pointer_mode>
   <scrolling_mode>
     <SCROLLING_MODE_KEY>KEY_RIGHTSHIFT</SCROLLING_MODE_KEY>
+    <SCROLLING_UP_KEY>KEY_W</SCROLLING_UP_KEY>
+    <SCROLLING_DOWN_KEY>KEY_S</SCROLLING_DOWN_KEY>
+    <SCROLLING_RIGHT_KEY>KEY_D</SCROLLING_RIGHT_KEY>
+    <SCROLLING_LEFT_KEY>KEY_A</SCROLLING_LEFT_KEY>
     <SCROLLING_SPEED>25</SCROLLING_SPEED>
     <SCROLLING_SPEEDUP_KEY>KEY_SLASH</SCROLLING_SPEEDUP_KEY>
     <SCROLLING_SPEEDUP_FACTOR>2</SCROLLING_SPEEDUP_FACTOR>
@@ -94,10 +98,10 @@ Item | Default value | Description
 Path to `config.dtd` | `config/config.dtd` | Relative or absolute path to the `config.dtd` from the config file
 DEVICE | `/path/to/your/keyboard` | Path to your keyboard under `/dev/input`
 POINTER_MODE_KEY | KEY_RIGHTCTRL | Key to activate pointer mode while being pushed down
-UP_KEY | KEY_W | Key to move the pointer up (in pointer mode)<br>Key to scroll up (in scrolling mode)
-DOWN_KEY | KEY_S | Key to move the pointer down (in pointer mode)<br>Key to scroll down (in scrolling mode)
-RIGHT_KEY | KEY_D | Key to move the pointer right (in pointer mode)<br>Key to scroll right (in scrolling mode)
-LEFT_KEY | KEY_A | Key to move the pointer left (in pointer mode)<br>Key to scroll left (in scrolling mode)
+POINTER_UP_KEY | KEY_W | Key to move the pointer up
+POINTER_DOWN_KEY | KEY_S | Key to move the pointer down
+POINTER_RIGHT_KEY | KEY_D | Key to move the pointer right
+POINTER_LEFT_KEY | KEY_A | Key to move the pointer left
 POINTER_MOVEMENT_SPEED | 2 | Pointer movement speed, must be a positive integer
 POINTER_SPEEDUP_KEY | KEY_SLASH | Key to increases the speed of the pointer only while being pushed down
 POINTER_SPEEDUP_FACTOR | 5 | Pointer movement speed will be multiplied by this value
@@ -105,6 +109,10 @@ MOUSE_LEFT_BUTTON | KEY_COMMA | Key to left click (in pointer mode)
 MOUSE_RIGHT_BUTTON | KEY_DOT | Key to right click (in pointer mode)
 MOUSE_MIDDLE_BUTTON | KEY_M | Key to middle click (in pointer mode)
 SCROLLING_MODE_KEY | KEY_RIGHTSHIFT | Key to activate scrolling mode while being pushed down
+SCROLLING_UP_KEY | KEY_W | Key to scroll up
+SCROLLING_DOWN_KEY | KEY_S | Key to scroll down
+SCROLLING_RIGHT_KEY | KEY_D | Key to scroll right
+SCROLLING_LEFT_KEY | KEY_A | Key to scroll left
 SCROLLING_SPEED | 25 | Scrolling speed, must be a positive integer
 SCROLLING_SPEEDUP_KEY | KEY_SLASH | Key to increases the speed of scrolling only while being pushed down
 SCROLLING_SPEEDUP_FACTOR | 2 | Scrolling speed will be multiplied by this value
@@ -118,7 +126,8 @@ $ diff old.xml new.xml
 >     <POINTER_MODE_KEY>KEY_RIGHTALT</POINTER_MODE_KEY>
 ```
 For a list of available key codes, see [here](https://gitlab.freedesktop.org/libevdev/libevdev/-/blob/master/include/linux/linux/input-event-codes.h?ref_type=heads#L75), for example.  
-Note that they must be key codes that are actually supported by your keyboard.
+Note that they must be key codes that are actually supported by your keyboard.  
+Also, for items to which you do not want to assign keys, you can leave those values blank.
 
 ## Usage
 ```
@@ -137,13 +146,13 @@ If it starts without error, the following output will appear on the terminal.
 
 Press `POINTER_MODE_KEY` to activate pointer mode.  
 Pointer mode is activated only as long as the key is kept pressed.  
-In this mode, you can move the pointer with the `UP_KEY`, `DOWN_KEY`, `RIGHT_KEY` and `LEFT_KEY`.  
+In this mode, you can move the pointer with the `POINTER_UP_KEY`, `POINTER_DOWN_KEY`, `POINTER_RIGHT_KEY` and `POINTER_LEFT_KEY`.  
 Pressing `SPEEDUP_KEY` while in this mode will increase the speed of the pointer for as long as you hold it down.  
 The `MOUSE_LEFT_BUTTON`, `MOUSE_RIGHT_BUTTON`, and `MOUSE_MIDDLE_BUTTON` allow you to left-click, right-click, and middle-click.
 
 Press `SCROLLING_MODE_KEY` to activate scrolling mode.  
 Scrolling mode is activated only as long as the key is kept pressed.  
-In this mode, you can scroll up and down with the `UP_KEY` and `DOWN_KEY`, and right and left with the `RIGHT_KEY` and `LEFT_KEY`.  
+In this mode, you can scroll up and down with the `SCROLLING_UP_KEY` and `SCROLLING_DOWN_KEY`, and right and left with the `SCROLLING_RIGHT_KEY` and `SCROLLING_LEFT_KEY`.  
 Pressing `SPEEDUP_KEY` while in this mode will increase the speed of scrolling for as long as you hold it down.
 
 In both pointer and scrolling modes, the keyboard does not provide any output as a keyboard.
