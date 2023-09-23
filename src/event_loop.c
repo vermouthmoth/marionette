@@ -56,20 +56,30 @@ static void handle_event(struct input_event ev)
    check_keydown(ev);
 
    if (ev.type == EV_KEY
-    && (ev.code == POINTER_MODE_KEY || ev.code == SCROLLING_MODE_KEY)
-    && ev.value == PRESS)
+    && (ev.code == POINTER_MODE_KEY || ev.code == SCROLLING_MODE_KEY))
    {
-      // only at the moment the key is pressed
-      unsigned int MODE_KEY = ev.code;
-      for (int i = 0; i < keys_count; i++)
+      if (ev.value == PRESS)
       {
-         if (i != MODE_KEY
-          && keydown_flags[i] == true)
+         // only at the moment the key is pressed
+         unsigned int MODE_KEY = ev.code;
+         for (int i = 0; i < keys_count; i++)
          {
-            // release all the other keys that are pressed down
-            // otherwise, those keys will remain pressed
-            uinput_write_event(EV_KEY, i, RELEASE);
+            if (i != MODE_KEY
+             && keydown_flags[i] == true)
+            {
+               // release all the other keys that are pressed down
+               // otherwise, those keys will remain pressed
+               uinput_write_event(EV_KEY, i, RELEASE);
+            }
          }
+      }
+
+      if (ev.value == RELEASE)
+      {
+         // prevents the mouse from being draggeda
+         uinput_write_event(EV_KEY, BTN_LEFT, RELEASE);
+         uinput_write_event(EV_KEY, BTN_RIGHT, RELEASE);
+         uinput_write_event(EV_KEY, BTN_MIDDLE, RELEASE);
       }
    }
 
