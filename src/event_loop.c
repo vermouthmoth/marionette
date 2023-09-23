@@ -76,7 +76,7 @@ static void handle_event(struct input_event ev)
 
       if (ev.value == RELEASE)
       {
-         // prevents the mouse from being draggeda
+         // prevent the mouse from staying in dragging
          uinput_write_event(EV_KEY, BTN_LEFT, RELEASE);
          uinput_write_event(EV_KEY, BTN_RIGHT, RELEASE);
          uinput_write_event(EV_KEY, BTN_MIDDLE, RELEASE);
