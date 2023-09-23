@@ -55,6 +55,7 @@ Config file template can be created using `gen_config`.
 ```
 $ ./gen_config > config.xml
 ```
+The name of the config file can be anything.
 
 The content of the config file template is as follows.
 ```xml
