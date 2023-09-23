@@ -68,7 +68,8 @@ int main(int argc, char *argv[])
    xmlDocSetRootElement(doc, root_node);
 
    // specify .dtd file
-   xmlCreateIntSubset(doc, BAD_CAST "config", NULL, BAD_CAST "config.dtd");
+   xmlCreateIntSubset(doc, BAD_CAST "config", NULL,
+                           BAD_CAST "config/config.dtd");
 
    // device
    xmlNodePtr device_node = xmlNewChild(root_node, NULL,
