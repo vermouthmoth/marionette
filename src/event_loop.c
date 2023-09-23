@@ -13,6 +13,10 @@
 //     /7(=)\_
 // VermouthMoth
 
+#define RELEASE   0
+#define PRESS     1
+#define HOLD_DOWN 2
+
 bool *keydown_flags;
 
 void uinput_write_event(unsigned int type, unsigned int code, int value)
@@ -32,17 +36,17 @@ static void check_keydown(struct input_event ev)
 {
    if (ev.type == EV_KEY)
    {
-      if (ev.value == 1 || ev.value == 2)
-      {
-         // if the KEY_i is pressed or held down,
-         // set the value of the KEY_i-th element to true
-         keydown_flags[ev.code] = true;
-      }
-      else
+      if (ev.value == RELEASE)
       {
          // if the KEY_i is released,
          // set the value of the KEY_i-th element to false
          keydown_flags[ev.code] = false;
+      }
+      else
+      {
+         // if the KEY_i is pressed or held down,
+         // set the value of the KEY_i-th element to true
+         keydown_flags[ev.code] = true;
       }
    }
 }
@@ -53,7 +57,7 @@ static void handle_event(struct input_event ev)
 
    if (ev.type == EV_KEY
     && (ev.code == POINTER_MODE_KEY || ev.code == SCROLLING_MODE_KEY)
-    && ev.value == 1)
+    && ev.value == PRESS)
    {
       // only at the moment the key is pressed
       unsigned int MODE_KEY = ev.code;
@@ -64,21 +68,21 @@ static void handle_event(struct input_event ev)
          {
             // release all the other keys that are pressed down
             // otherwise, those keys will remain pressed
-            uinput_write_event(EV_KEY, i, 0);
+            uinput_write_event(EV_KEY, i, RELEASE);
          }
       }
    }
 
-   if (keydown_flags[POINTER_MODE_KEY]
-    || keydown_flags[SCROLLING_MODE_KEY])
+   if ((keydown_flags[POINTER_MODE_KEY] || keydown_flags[SCROLLING_MODE_KEY])
+    && ev.type == EV_KEY)
    {
       if (keydown_flags[POINTER_MODE_KEY])
       {
-         if (ev.type == EV_KEY && ev.code == MOUSE_LEFT_BUTTON)
+         if (ev.code == MOUSE_LEFT_BUTTON)
             uinput_write_event(EV_KEY, BTN_LEFT, ev.value);
-         if (ev.type == EV_KEY && ev.code == MOUSE_RIGHT_BUTTON)
+         if (ev.code == MOUSE_RIGHT_BUTTON)
             uinput_write_event(EV_KEY, BTN_RIGHT, ev.value);
-         if (ev.type == EV_KEY && ev.code == MOUSE_MIDDLE_BUTTON)
+         if (ev.code == MOUSE_MIDDLE_BUTTON)
             uinput_write_event(EV_KEY, BTN_MIDDLE, ev.value);
       }
    }
