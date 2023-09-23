@@ -1,5 +1,5 @@
 # marionette
-`marionette` is a C program to emulate mouse with keyboard on Linux using `libevdev`.
+`marionette` is a C program to **emulate mouse with keyboard on Linux**.
 
 The following features are available.
 - Moving the pointer
@@ -7,7 +7,8 @@ The following features are available.
 - Scrolling
 
 This program creates a virtual keyboard exactly the same as your keyboard, but adds some mouse functions.  
-The virtual keyboard then outputs the input events from the original keyboard in a form that basically passes through as is, and converts them to mouse events as needed.
+The virtual keyboard then outputs the input events from the original keyboard in a form that basically passes through as is, and converts them to mouse events as needed.  
+It works **no matter what window system** you are using, e.g. `X Window System` or `Wayland`.
 
 > [!NOTE]  
 > An quick overview , from downloading to running, will be as follows.
@@ -22,8 +23,11 @@ The virtual keyboard then outputs the input events from the original keyboard in
 > $ sudo ./marionette config.xml
 > ```
 
+<details>
+<summary>Additional info</summary>
+
 This program relies on `libevdev`, which stands between the kernel and other subsequent programs that handle input events.  
-Thus, it works **no matter what window system** you are using, e.g. `X Window System` or `Wayland`.  
+Thus, it works no matter what window system you are using.  
 It even works on a non-graphical console.  
 For `libevdev`, see [https://www.freedesktop.org/wiki/Software/libevdev/](https://www.freedesktop.org/wiki/Software/libevdev/).
 
@@ -34,8 +38,8 @@ For `libxml2`, see [https://gitlab.gnome.org/GNOME/libxml2/-/wikis/](https://git
 This program consists of the following directories and files.
 - `src/`: direcotory containing source files
 - `include/`: directory containing header files
-- `config/`: directory containing `config.dtd`
 - `MakeFile`: makefile
+</details>
 
 ## Building
 ```
@@ -48,20 +52,26 @@ Two executable binary files `marionette` and `gen_config` will be created.
 
 ## Configuration
 Configuration file is written in XML format.  
-Valid format rules are shown in `config/config.dtd`.  
-`marionette` validates if the format of a given config file is valid using the DTD.
 
 Config file template can be created using `gen_config`.
 ```
 $ ./gen_config > config.xml
 ```
-The name of the config file can be anything.
+The name of the configuration file can be anything.
+<details>
+<summary>Additional info</summary>
 
-The content of the config file template is as follows.
+`marionette` validates if the format of a given config file is valid using DTD info.  
+Valid format rules are written in `config/config.dtd`.  
+`gen_config` makes the template include `config/config.dtd`.  
+If you have moved the location of `gen_config` or `config/config.dtd`, instead run the following.
+```
+$ ./gen_config /path/to/config.dtd > config.xml
+```
+</details>
+  
+The editable contents in the config file template is as follows.
 ```xml
-$ cat config.xml
-<?xml version="1.0" encoding="ASCII"?>
-<!DOCTYPE config SYSTEM "config/config.dtd">
 <config>
   <device>
     <DEVICE>/path/to/your/keyboard</DEVICE>
@@ -95,7 +105,6 @@ $ cat config.xml
 Below are the configuration items, their default values, and descriptions.
 Item | Default value | Description
 --- | --- | ---
-Path to `config.dtd` | `config/config.dtd` | Relative or absolute path to the `config.dtd` from the config file
 DEVICE | `/path/to/your/keyboard` | Path to your keyboard under `/dev/input`
 POINTER_MODE_KEY | KEY_RIGHTCTRL | Key to activate pointer mode while being pushed down
 POINTER_UP_KEY | KEY_W | Key to move the pointer up
@@ -117,7 +126,7 @@ SCROLLING_SPEED | 25 | Scrolling speed, must be a positive integer
 SCROLLING_SPEEDUP_KEY | KEY_SLASH | Key to increases the speed of scrolling only while being pushed down
 SCROLLING_SPEEDUP_FACTOR | 2 | Scrolling speed will be multiplied by this value
 
-For example, if you want to change the key that enters pointer mode from `KEY_RIGHTCTRL` to `KEY_RIGHTALT`, edit as follows.
+For example, to change the key assignment of `POINTER_MODE_KEY` from `KEY_RIGHTCTRL` to `KEY_RIGHTALT`, edit as follows.
 ```diff
 $ diff old.xml new.xml 
 8c8
@@ -144,12 +153,14 @@ If it starts without error, the following output will appear on the terminal.
 
 ```
 
+### Pointer Mode
 Press `POINTER_MODE_KEY` to activate pointer mode.  
 Pointer mode is activated only as long as the key is kept pressed.  
 In this mode, you can move the pointer with the `POINTER_UP_KEY`, `POINTER_DOWN_KEY`, `POINTER_RIGHT_KEY` and `POINTER_LEFT_KEY`.  
 Pressing `SPEEDUP_KEY` while in this mode will increase the speed of the pointer for as long as you hold it down.  
 The `MOUSE_LEFT_BUTTON`, `MOUSE_RIGHT_BUTTON`, and `MOUSE_MIDDLE_BUTTON` allow you to left-click, right-click, and middle-click.
 
+### Scrolling Mode
 Press `SCROLLING_MODE_KEY` to activate scrolling mode.  
 Scrolling mode is activated only as long as the key is kept pressed.  
 In this mode, you can scroll up and down with the `SCROLLING_UP_KEY` and `SCROLLING_DOWN_KEY`, and right and left with the `SCROLLING_RIGHT_KEY` and `SCROLLING_LEFT_KEY`.  
