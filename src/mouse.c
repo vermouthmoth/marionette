@@ -32,8 +32,8 @@ static void move_pointer(void)
    else
       value = POINTER_MOVEMENT_SPEED;
 
-   if (keydown_flags[UP_KEY]
-    && keydown_flags[RIGHT_KEY])      // up-right
+   if (keydown_flags[POINTER_UP_KEY]
+    && keydown_flags[POINTER_RIGHT_KEY])      // up-right
    {
       // prevent diagonal movement from being faster
       // than vertical or horizontal movement
@@ -41,22 +41,22 @@ static void move_pointer(void)
       uinput_write_event(EV_REL, REL_Y, -value);
       uinput_write_event(EV_REL, REL_X, +value);
    }
-   else if (keydown_flags[RIGHT_KEY]
-         && keydown_flags[DOWN_KEY])  // right-down
+   else if (keydown_flags[POINTER_RIGHT_KEY]
+         && keydown_flags[POINTER_DOWN_KEY])  // right-down
    {
       value = (int) value / sqrt(2);
       uinput_write_event(EV_REL, REL_X, +value);
       uinput_write_event(EV_REL, REL_Y, +value);
    }
-   else if (keydown_flags[DOWN_KEY]
-         && keydown_flags[LEFT_KEY])  // down-left
+   else if (keydown_flags[POINTER_DOWN_KEY]
+         && keydown_flags[POINTER_LEFT_KEY])  // down-left
    {
       value = (int) value / sqrt(2);
       uinput_write_event(EV_REL, REL_Y, +value);
       uinput_write_event(EV_REL, REL_X, -value);
    }
-   else if (keydown_flags[LEFT_KEY]
-         && keydown_flags[UP_KEY])    // left-up
+   else if (keydown_flags[POINTER_LEFT_KEY]
+         && keydown_flags[POINTER_UP_KEY])    // left-up
    {
       value = (int) value / sqrt(2);
       uinput_write_event(EV_REL, REL_X, -value);
@@ -66,13 +66,13 @@ static void move_pointer(void)
    {
       // stop when two keys in opposite directions are pressed
       // at the same time
-      if (keydown_flags[UP_KEY])      // up
+      if (keydown_flags[POINTER_UP_KEY])      // up
          uinput_write_event(EV_REL, REL_Y, -value);
-      if (keydown_flags[RIGHT_KEY])   // right
+      if (keydown_flags[POINTER_RIGHT_KEY])   // right
          uinput_write_event(EV_REL, REL_X, +value);
-      if (keydown_flags[DOWN_KEY])    // down
+      if (keydown_flags[POINTER_DOWN_KEY])    // down
          uinput_write_event(EV_REL, REL_Y, +value);
-      if (keydown_flags[LEFT_KEY])    // left
+      if (keydown_flags[POINTER_LEFT_KEY])    // left
          uinput_write_event(EV_REL, REL_X, -value);
    }
 }
@@ -96,13 +96,13 @@ static void scroll(void)
    else
       value = SCROLLING_SPEED;
 
-   if (keydown_flags[UP_KEY])
+   if (keydown_flags[SCROLLING_UP_KEY])
       uinput_write_event(EV_REL, REL_WHEEL_HI_RES, +value);
-   if (keydown_flags[DOWN_KEY])
+   if (keydown_flags[SCROLLING_DOWN_KEY])
       uinput_write_event(EV_REL, REL_WHEEL_HI_RES, -value);
-   if (keydown_flags[RIGHT_KEY])
+   if (keydown_flags[SCROLLING_RIGHT_KEY])
       uinput_write_event(EV_REL, REL_HWHEEL_HI_RES, +value);
-   if (keydown_flags[LEFT_KEY])
+   if (keydown_flags[SCROLLING_LEFT_KEY])
       uinput_write_event(EV_REL, REL_HWHEEL_HI_RES, -value);
 }
 

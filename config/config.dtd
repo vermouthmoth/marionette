@@ -2,10 +2,10 @@
 
 <!ELEMENT device           (DEVICE)>
 <!ELEMENT pointer_mode     (POINTER_MODE_KEY,
-                            UP_KEY,
-                            DOWN_KEY,
-                            RIGHT_KEY,
-                            LEFT_KEY,
+                            POINTER_UP_KEY,
+                            POINTER_DOWN_KEY,
+                            POINTER_RIGHT_KEY,
+                            POINTER_LEFT_KEY,
                             POINTER_MOVEMENT_SPEED,
                             POINTER_SPEEDUP_KEY,
                             POINTER_SPEEDUP_FACTOR,
@@ -13,16 +13,20 @@
                             MOUSE_RIGHT_BUTTON,
                             MOUSE_MIDDLE_BUTTON)>
 <!ELEMENT scrolling_mode   (SCROLLING_MODE_KEY,
+                            SCROLLING_UP_KEY,
+                            SCROLLING_DOWN_KEY,
+                            SCROLLING_RIGHT_KEY,
+                            SCROLLING_LEFT_KEY,
                             SCROLLING_SPEED,
                             SCROLLING_SPEEDUP_KEY,
                             SCROLLING_SPEEDUP_FACTOR)>
 
 <!ELEMENT DEVICE (#PCDATA)>
 <!ELEMENT POINTER_MODE_KEY (#PCDATA)>
-<!ELEMENT UP_KEY (#PCDATA)>
-<!ELEMENT DOWN_KEY (#PCDATA)>
-<!ELEMENT RIGHT_KEY (#PCDATA)>
-<!ELEMENT LEFT_KEY (#PCDATA)>
+<!ELEMENT POINTER_UP_KEY (#PCDATA)>
+<!ELEMENT POINTER_DOWN_KEY (#PCDATA)>
+<!ELEMENT POINTER_RIGHT_KEY (#PCDATA)>
+<!ELEMENT POINTER_LEFT_KEY (#PCDATA)>
 <!ELEMENT POINTER_MOVEMENT_SPEED (#PCDATA)>
 <!ELEMENT POINTER_SPEEDUP_KEY (#PCDATA)>
 <!ELEMENT POINTER_SPEEDUP_FACTOR (#PCDATA)>
@@ -30,6 +34,10 @@
 <!ELEMENT MOUSE_RIGHT_BUTTON (#PCDATA)>
 <!ELEMENT MOUSE_MIDDLE_BUTTON (#PCDATA)>
 <!ELEMENT SCROLLING_MODE_KEY (#PCDATA)>
+<!ELEMENT SCROLLING_UP_KEY (#PCDATA)>
+<!ELEMENT SCROLLING_DOWN_KEY (#PCDATA)>
+<!ELEMENT SCROLLING_RIGHT_KEY (#PCDATA)>
+<!ELEMENT SCROLLING_LEFT_KEY (#PCDATA)>
 <!ELEMENT SCROLLING_SPEED (#PCDATA)>
 <!ELEMENT SCROLLING_SPEEDUP_KEY (#PCDATA)>
 <!ELEMENT SCROLLING_SPEEDUP_FACTOR (#PCDATA)>
