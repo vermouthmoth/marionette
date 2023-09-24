@@ -16,8 +16,11 @@
 #ifdef LIBXML_READER_ENABLED
 
 // determined from .dtd
-#define SETTING_NAME_DEPTH 2
+#define SETTING_ROOT_DEPTH  0
+#define SETTING_MODE_DEPTH  1
+#define SETTING_NAME_DEPTH  2
 #define SETTING_VALUE_DEPTH 3
+#define SETTING_ATTRIBUTES  3
 
 char *DEVICE;
 
@@ -58,7 +61,6 @@ static void set_value(xmlChar const *name, xmlChar const *value)
          POINTER_MODE_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
-
    }
    else if (strcmp("POINTER_UP_KEY", (char const *)name) == 0)
    {
@@ -212,17 +214,39 @@ static void parse_and_load(xmlTextReaderPtr reader)
 
    // name -> value -> name -> value -> ... loop
    // should be guaranteed by .dtd
+   xmlChar const *attrs[SETTING_ATTRIBUTES]
+                     = {BAD_CAST "DEVICE",
+                        BAD_CAST "POINTER_MODE_KEY",
+                        BAD_CAST "SCROLLING_MODE_KEY"};
    xmlChar const *name;
    do
    {
       xmlChar const *value = xmlTextReaderConstValue(reader);
 
-      if ((xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT)
-        && xmlTextReaderDepth(reader) == SETTING_NAME_DEPTH)
-         name = xmlTextReaderConstName(reader);
+      if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT)
+      {
+         if ((xmlTextReaderDepth(reader) == SETTING_ROOT_DEPTH)
+          || (xmlTextReaderDepth(reader) == SETTING_MODE_DEPTH))
+         {
+            // attributes
+            for (int i  = 0; i < SETTING_ATTRIBUTES; i++)
+            {
+               xmlChar const *attr_value
+                           = xmlTextReaderGetAttribute(reader, attrs[i]);
+               if (attr_value != NULL)
+               {
+                  printf("[I] %-25s: %s\n", attrs[i], attr_value);
+                  set_value(attrs[i], attr_value);
+               }
+            }
+         }
+
+         if (xmlTextReaderDepth(reader) == SETTING_NAME_DEPTH)
+            name = xmlTextReaderConstName(reader);
+      }
 
       if ((xmlTextReaderNodeType(reader) == XML_READER_TYPE_TEXT)
-        && xmlTextReaderDepth(reader) == SETTING_VALUE_DEPTH)
+       && (xmlTextReaderDepth(reader) == SETTING_VALUE_DEPTH))
       {
          printf("[I] %-25s: %s\n", name, value);
          set_value(name, value);

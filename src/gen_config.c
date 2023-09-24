@@ -21,12 +21,11 @@
 
 #if defined(LIBXML_TREE_ENABLED) && defined(LIBXML_OUTPUT_ENABLED)
 
-#define PROPS_POINTER_MODE   11
-#define PROPS_SCROLLING_MODE  8
+#define PROPS_POINTER_MODE   10
+#define PROPS_SCROLLING_MODE  7
 
 static char *props_name_pointer_mode[PROPS_POINTER_MODE]
-                  = {"POINTER_MODE_KEY",
-                     "POINTER_UP_KEY",
+                  = {"POINTER_UP_KEY",
                      "POINTER_DOWN_KEY",
                      "POINTER_RIGHT_KEY",
                      "POINTER_LEFT_KEY",
@@ -38,8 +37,7 @@ static char *props_name_pointer_mode[PROPS_POINTER_MODE]
                      "MOUSE_MIDDLE_BUTTON"}; 
 
 static char *props_value_pointer_mode[PROPS_POINTER_MODE]
-                  = {"KEY_RIGHTCTRL",
-                     "KEY_W",
+                  = {"KEY_W",
                      "KEY_S",
                      "KEY_D",
                      "KEY_A",
@@ -51,8 +49,7 @@ static char *props_value_pointer_mode[PROPS_POINTER_MODE]
                      "KEY_M"};
 
 static char *props_name_scrolling_mode[PROPS_SCROLLING_MODE]
-                  = {"SCROLLING_MODE_KEY",
-                     "SCROLLING_UP_KEY",
+                  = {"SCROLLING_UP_KEY",
                      "SCROLLING_DOWN_KEY",
                      "SCROLLING_RIGHT_KEY",
                      "SCROLLING_LEFT_KEY",
@@ -61,8 +58,7 @@ static char *props_name_scrolling_mode[PROPS_SCROLLING_MODE]
                      "SCROLLING_SPEEDUP_FACTOR"};
 
 static char *props_value_scrolling_mode[PROPS_SCROLLING_MODE]
-                  = {"KEY_RIGHTSHIFT",
-                     "KEY_W",
+                  = {"KEY_W",
                      "KEY_S",
                      "KEY_D",
                      "KEY_A",
@@ -90,14 +86,14 @@ int main(int argc, char *argv[])
    xmlAddPrevSibling(doc->children, (xmlNodePtr)dtd);
 
    // device
-   xmlNodePtr device_node = xmlNewChild(root_node, NULL,
-                                        BAD_CAST "device", NULL);
-   xmlNewChild(device_node, NULL, BAD_CAST "DEVICE",
-                                  BAD_CAST "/path/to/your/keyboard");
+   xmlNewProp(root_node, BAD_CAST "DEVICE",
+                           BAD_CAST "/path/to/your/keyboard");
 
    // pointer mode
    xmlNodePtr pointer_node = xmlNewChild(root_node, NULL,
                                          BAD_CAST "pointer_mode", NULL);
+   xmlNewProp(pointer_node, BAD_CAST "POINTER_MODE_KEY",
+                            BAD_CAST "KEY_RIGHTCTRL");
    for (int i = 0; i < PROPS_POINTER_MODE; i++)
    {
       xmlNewChild(pointer_node, NULL, BAD_CAST props_name_pointer_mode[i],
@@ -107,6 +103,8 @@ int main(int argc, char *argv[])
    // scrolling mode
    xmlNodePtr scrolling_node = xmlNewChild(root_node, NULL,
                                            BAD_CAST "scrolling_mode", NULL);
+   xmlNewProp(scrolling_node, BAD_CAST "SCROLLING_MODE_KEY",
+                              BAD_CAST "KEY_RIGHTSHIFT");
    for (int i = 0; i < PROPS_SCROLLING_MODE; i++)
    {
       xmlNewChild(scrolling_node, NULL, BAD_CAST props_name_scrolling_mode[i],
