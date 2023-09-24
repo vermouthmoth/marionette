@@ -42,6 +42,10 @@ This program consists of the following directories and files.
 </details>
 
 ## Building
+
+This program uses `libevdev` and `libxml2`.  
+You may need to install something like `libevdev`, `libevdev-devel` and `libxml2`.
+
 ```
 $ git clone https://github.com/vermouthmoth/marionette.git
 $ cd marionette
@@ -72,12 +76,8 @@ $ ./gen_config /path/to/config.dtd > config.xml
   
 The editable contents in the config file template is as follows.
 ```xml
-<config>
-  <device>
-    <DEVICE>/path/to/your/keyboard</DEVICE>
-  </device>
-  <pointer_mode>
-    <POINTER_MODE_KEY>KEY_RIGHTCTRL</POINTER_MODE_KEY>
+<config DEVICE="/path/to/your/keyboard">
+  <pointer_mode POINTER_MODE_KEY="KEY_RIGHTCTRL">
     <POINTER_UP_KEY>KEY_W</POINTER_UP_KEY>
     <POINTER_DOWN_KEY>KEY_S</POINTER_DOWN_KEY>
     <POINTER_RIGHT_KEY>KEY_D</POINTER_RIGHT_KEY>
@@ -89,8 +89,7 @@ The editable contents in the config file template is as follows.
     <MOUSE_RIGHT_BUTTON>KEY_DOT</MOUSE_RIGHT_BUTTON>
     <MOUSE_MIDDLE_BUTTON>KEY_M</MOUSE_MIDDLE_BUTTON>
   </pointer_mode>
-  <scrolling_mode>
-    <SCROLLING_MODE_KEY>KEY_RIGHTSHIFT</SCROLLING_MODE_KEY>
+  <scrolling_mode SCROLLING_MODE_KEY="KEY_RIGHTSHIFT">
     <SCROLLING_UP_KEY>KEY_W</SCROLLING_UP_KEY>
     <SCROLLING_DOWN_KEY>KEY_S</SCROLLING_DOWN_KEY>
     <SCROLLING_RIGHT_KEY>KEY_D</SCROLLING_RIGHT_KEY>
@@ -129,10 +128,10 @@ SCROLLING_SPEEDUP_FACTOR | 2 | Scrolling speed will be multiplied by this value
 For example, to change the key assignment of `POINTER_MODE_KEY` from `KEY_RIGHTCTRL` to `KEY_RIGHTALT`, edit as follows.
 ```diff
 $ diff old.xml new.xml 
-8c8
-<     <POINTER_MODE_KEY>KEY_RIGHTCTRL</POINTER_MODE_KEY>
+28c28
+<   <pointer_mode POINTER_MODE_KEY="KEY_RIGHTCTRL">
 ---
->     <POINTER_MODE_KEY>KEY_RIGHTALT</POINTER_MODE_KEY>
+>   <pointer_mode POINTER_MODE_KEY="KEY_RIGHTALT">
 ```
 For a list of available key codes, see [here](https://gitlab.freedesktop.org/libevdev/libevdev/-/blob/master/include/linux/linux/input-event-codes.h?ref_type=heads#L75), for example.  
 Note that they must be key codes that are actually supported by your keyboard.  
@@ -169,13 +168,8 @@ Pressing `SPEEDUP_KEY` while in this mode will increase the speed of scrolling f
 In both pointer and scrolling modes, the keyboard does not provide any output as a keyboard.
 
 To terminate, just use `Ctrl+C` or `kill`.
-
-#### License
-MIT License Copyright (c) 2023 VermouthMoth
-
-#### Contact
-[`0o.jx_xjzzz`](https://discordapp.com/users/1150388238037565541) on Discord
 ___
+#### Contact
+[`0o.jx_xjzzz`](https://discordapp.com/users/1150388238037565541) on Discord  
 _This program was originally written just for my own use._  
 _**ANY** kind of your feedback is sincerely welcome._  
-_It will make this program more useful for more people..._
