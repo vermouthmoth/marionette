@@ -50,63 +50,37 @@ int SCROLLING_SPEEDUP_FACTOR = 1;
 unsigned int PASS_THROUGH_KEY[PASS_THROUGH_KEY_MAX];
 int pass_through_key_count;
 
-static unsigned int keyname_to_keycode(char const *keyname)
+static int keyname_to_keycode(char const *keyname)
+{
+   return libevdev_event_code_from_name(EV_KEY, keyname);
+}
+
+static void set_keycode(unsigned int *setting_item,
+                        char const *setting_value)
 {
    int ret;
-   ret = libevdev_event_code_from_name(EV_KEY, keyname);
-   if (ret == -1)
-      return -1;
-   else
-      return ret;
+   ret = keyname_to_keycode(setting_value);
+      if (ret != -1)
+         *setting_item = (unsigned int)ret;
+      else
+         printf("[E] %-25s  failed\n", "");
 }
 
 static void set_value(char const *name, char const *value)
 {
    int ret;
    if (strcmp("DEVICE", name) == 0)
-   {
       DEVICE = strdup(value);
-   }
    else if (strcmp("POINTER_MODE_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         POINTER_MODE_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&POINTER_MODE_KEY, value);
    else if (strcmp("POINTER_UP_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         POINTER_UP_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&POINTER_UP_KEY, value);
    else if (strcmp("POINTER_DOWN_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         POINTER_DOWN_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&POINTER_DOWN_KEY, value);
    else if (strcmp("POINTER_RIGHT_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         POINTER_RIGHT_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&POINTER_RIGHT_KEY, value);
    else if (strcmp("POINTER_LEFT_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         POINTER_LEFT_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&POINTER_LEFT_KEY, value);
    else if (strcmp("POINTER_MOVEMENT_SPEED", name) == 0)
    {
       ret = atoi(value);
@@ -116,13 +90,7 @@ static void set_value(char const *name, char const *value)
          printf("[E] %-25s  failed\n", "");
    }
    else if (strcmp("POINTER_SPEEDUP_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         POINTER_SPEEDUP_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&POINTER_SPEEDUP_KEY, value);
    else if (strcmp("POINTER_SPEEDUP_FACTOR", name) == 0)
    {
       ret = atoi(value);
@@ -132,69 +100,21 @@ static void set_value(char const *name, char const *value)
          printf("[E] %-25s  failed\n", "");
    }
    else if (strcmp("MOUSE_LEFT_BUTTON", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         MOUSE_LEFT_BUTTON = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&MOUSE_LEFT_BUTTON, value);
    else if (strcmp("MOUSE_RIGHT_BUTTON", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         MOUSE_RIGHT_BUTTON = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&MOUSE_RIGHT_BUTTON, value);
    else if (strcmp("MOUSE_MIDDLE_BUTTON", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         MOUSE_MIDDLE_BUTTON = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&MOUSE_MIDDLE_BUTTON, value);
    else if (strcmp("SCROLLING_MODE_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         SCROLLING_MODE_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&SCROLLING_MODE_KEY, value);
    else if (strcmp("SCROLLING_UP_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         SCROLLING_UP_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&SCROLLING_UP_KEY, value);
    else if (strcmp("SCROLLING_DOWN_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         SCROLLING_DOWN_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&SCROLLING_DOWN_KEY, value);
    else if (strcmp("SCROLLING_RIGHT_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         SCROLLING_RIGHT_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&SCROLLING_RIGHT_KEY, value);
    else if (strcmp("SCROLLING_LEFT_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         SCROLLING_LEFT_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&SCROLLING_LEFT_KEY, value);
    else if (strcmp("SCROLLING_SPEED", name) == 0)
    {
       ret = atoi(value);
@@ -204,13 +124,7 @@ static void set_value(char const *name, char const *value)
          printf("[E] %-25s  failed\n", "");
    }
    else if (strcmp("SCROLLING_SPEEDUP_KEY", name) == 0)
-   {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-         SCROLLING_SPEEDUP_KEY = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_keycode(&SCROLLING_SPEEDUP_KEY, value);
    else if (strcmp("SCROLLING_SPEEDUP_FACTOR", name) == 0)
    {
       ret = atoi(value);
