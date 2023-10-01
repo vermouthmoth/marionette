@@ -44,7 +44,7 @@ This program consists of the following directories and files.
 ## Building
 
 This program uses `libevdev` and `libxml2`.  
-You may need to install something like `libevdev`, `libevdev-devel` and `libxml2`.
+You may need to install something like `libevdev`, `libevdev-devel` and `libxml2` before building.
 
 ```
 $ git clone https://github.com/vermouthmoth/marionette.git
@@ -88,6 +88,8 @@ The editable contents in the config file template is as follows.
     <MOUSE_LEFT_BUTTON>KEY_COMMA</MOUSE_LEFT_BUTTON>
     <MOUSE_RIGHT_BUTTON>KEY_DOT</MOUSE_RIGHT_BUTTON>
     <MOUSE_MIDDLE_BUTTON>KEY_M</MOUSE_MIDDLE_BUTTON>
+    <PASS_THROUGH_KEY>KEY_LEFTSHIFT</PASS_THROUGH_KEY>
+    <PASS_THROUGH_KEY>KEY_LEFTCTRL</PASS_THROUGH_KEY>
   </pointer_mode>
   <scrolling_mode SCROLLING_MODE_KEY="KEY_RIGHTSHIFT">
     <SCROLLING_UP_KEY>KEY_W</SCROLLING_UP_KEY>
@@ -124,6 +126,7 @@ SCROLLING_LEFT_KEY | KEY_A | Key to scroll left
 SCROLLING_SPEED | 25 | Scrolling speed, must be a positive integer
 SCROLLING_SPEEDUP_KEY | KEY_SLASH | Key to increases the speed of scrolling only while being pushed down
 SCROLLING_SPEEDUP_FACTOR | 2 | Scrolling speed will be multiplied by this value
+PASS_THROUGH_KEY | KEY_LEFTSHIFT and KEY_LEFTCTRL <br> (in pointer mode) | Key that passes through without being grabbed its input <br> Can be set to both pointer mode or scrolling mode
 
 For example, to change the key assignment of `POINTER_MODE_KEY` from `KEY_RIGHTCTRL` to `KEY_RIGHTALT`, edit as follows.
 ```diff
@@ -165,7 +168,7 @@ Scrolling mode is activated only as long as the key is kept pressed.
 In this mode, you can scroll up and down with the `SCROLLING_UP_KEY` and `SCROLLING_DOWN_KEY`, and right and left with the `SCROLLING_RIGHT_KEY` and `SCROLLING_LEFT_KEY`.  
 Pressing `SPEEDUP_KEY` while in this mode will increase the speed of scrolling for as long as you hold it down.
 
-In both pointer and scrolling modes, the keyboard does not provide any output as a keyboard.
+In both pointer and scrolling modes, the keyboard does not provide any output as a keyboard, except for the keys configured as `PASS_THROUGH_KEY`.
 
 To terminate, just use `Ctrl+C` or `kill`.
 ___
