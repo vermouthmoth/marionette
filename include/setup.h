@@ -3,6 +3,8 @@
 //     /7(=)\_
 // VermouthMoth
 
+#define PASS_THROUGH_KEY_MAX  256
+
 extern char *DEVICE;
 
 extern unsigned int POINTER_MODE_KEY;
@@ -26,5 +28,8 @@ extern unsigned int SCROLLING_LEFT_KEY;
 extern int SCROLLING_SPEED;
 extern unsigned int SCROLLING_SPEEDUP_KEY;
 extern int SCROLLING_SPEEDUP_FACTOR;
+
+extern unsigned int PASS_THROUGH_KEY[PASS_THROUGH_KEY_MAX];
+extern int pass_through_key_count;
 
 extern void setup(char const *file_name);

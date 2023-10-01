@@ -95,6 +95,13 @@ static void handle_event(struct input_event ev)
          if (ev.code == MOUSE_MIDDLE_BUTTON)
             uinput_write_event(EV_KEY, BTN_MIDDLE, ev.value);
       }
+
+      // pass through
+      for (int i = 0; i < pass_through_key_count; i++)
+      {
+         if (PASS_THROUGH_KEY[i] == ev.code)
+            uinput_write_event(ev.type, ev.code, ev.value);
+      }
    }
    else
    {

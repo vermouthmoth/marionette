@@ -47,6 +47,9 @@ int SCROLLING_SPEED = 1;
 unsigned int SCROLLING_SPEEDUP_KEY;
 int SCROLLING_SPEEDUP_FACTOR = 1;
 
+unsigned int PASS_THROUGH_KEY[PASS_THROUGH_KEY_MAX];
+int pass_through_key_count;
+
 static void set_value(xmlChar const *name, xmlChar const *value)
 {
    int ret;
@@ -203,6 +206,17 @@ static void set_value(xmlChar const *name, xmlChar const *value)
       ret = atoi((char const *)value);
       if (ret != 0)
          SCROLLING_SPEEDUP_FACTOR = ret;
+      else
+         printf("[E] %-25s  failed\n", "");
+   }
+   else if (strcmp("PASS_THROUGH_KEY", (char const *)name) == 0)
+   {
+      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      if (ret != -1)
+      {
+         PASS_THROUGH_KEY[pass_through_key_count] = (unsigned int)ret;
+         pass_through_key_count += 1;
+      }
       else
          printf("[E] %-25s  failed\n", "");
    }

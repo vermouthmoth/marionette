@@ -21,7 +21,7 @@
 
 #if defined(LIBXML_TREE_ENABLED) && defined(LIBXML_OUTPUT_ENABLED)
 
-#define PROPS_POINTER_MODE   10
+#define PROPS_POINTER_MODE   12
 #define PROPS_SCROLLING_MODE  7
 
 static char *props_name_pointer_mode[PROPS_POINTER_MODE]
@@ -34,7 +34,9 @@ static char *props_name_pointer_mode[PROPS_POINTER_MODE]
                      "POINTER_SPEEDUP_FACTOR",
                      "MOUSE_LEFT_BUTTON",
                      "MOUSE_RIGHT_BUTTON",
-                     "MOUSE_MIDDLE_BUTTON"}; 
+                     "MOUSE_MIDDLE_BUTTON",
+                     "PASS_THROUGH_KEY",
+                     "PASS_THROUGH_KEY"};
 
 static char *props_value_pointer_mode[PROPS_POINTER_MODE]
                   = {"KEY_W",
@@ -46,7 +48,9 @@ static char *props_value_pointer_mode[PROPS_POINTER_MODE]
                      "5",
                      "KEY_COMMA",
                      "KEY_DOT",
-                     "KEY_M"};
+                     "KEY_M",
+                     "KEY_LEFTSHIFT",
+                     "KEY_LEFTCTRL"};
 
 static char *props_name_scrolling_mode[PROPS_SCROLLING_MODE]
                   = {"SCROLLING_UP_KEY",

@@ -9,14 +9,16 @@
                                     POINTER_SPEEDUP_FACTOR,
                                     MOUSE_LEFT_BUTTON,
                                     MOUSE_RIGHT_BUTTON,
-                                    MOUSE_MIDDLE_BUTTON)>
+                                    MOUSE_MIDDLE_BUTTON,
+                                    PASS_THROUGH_KEY*)>
 <!ELEMENT scrolling_mode           (SCROLLING_UP_KEY,
                                     SCROLLING_DOWN_KEY,
                                     SCROLLING_RIGHT_KEY,
                                     SCROLLING_LEFT_KEY,
                                     SCROLLING_SPEED,
                                     SCROLLING_SPEEDUP_KEY,
-                                    SCROLLING_SPEEDUP_FACTOR)>
+                                    SCROLLING_SPEEDUP_FACTOR,
+                                    PASS_THROUGH_KEY*)>
 
 <!ATTLIST config                   DEVICE CDATA #REQUIRED>
 <!ATTLIST pointer_mode             POINTER_MODE_KEY CDATA #REQUIRED>
@@ -38,3 +40,4 @@
 <!ELEMENT SCROLLING_SPEED          (#PCDATA)>
 <!ELEMENT SCROLLING_SPEEDUP_KEY    (#PCDATA)>
 <!ELEMENT SCROLLING_SPEEDUP_FACTOR (#PCDATA)>
+<!ELEMENT PASS_THROUGH_KEY         (#PCDATA)>
