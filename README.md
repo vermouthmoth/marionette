@@ -170,7 +170,9 @@ Pressing `SPEEDUP_KEY` while in this mode will increase the speed of scrolling f
 
 In both pointer and scrolling modes, the keyboard does not provide any output as a keyboard, except for the keys configured as `PASS_THROUGH_KEY`.
 
-To terminate, just use `Ctrl+C` or `kill`.
+To terminate the program, press the following keys in sequence.  
+`POINTER_MODE_KEY`, `K`, `I`, `L` and `L`.  
+Or, just using `Ctrl+C` or `kill` would be fine.
 ___
 #### Contact
 [`0o.jx_xjzzz`](https://discordapp.com/users/1150388238037565541) on Discord  
