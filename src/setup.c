@@ -50,6 +50,16 @@ int SCROLLING_SPEEDUP_FACTOR = 1;
 unsigned int PASS_THROUGH_KEY[PASS_THROUGH_KEY_MAX];
 int pass_through_key_count;
 
+static unsigned int keyname_to_keycode(char const *keyname)
+{
+   int ret;
+   ret = libevdev_event_code_from_name(EV_KEY, keyname);
+   if (ret == -1)
+      return -1;
+   else
+      return ret;
+}
+
 static void set_value(char const *name, char const *value)
 {
    int ret;
@@ -59,7 +69,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("POINTER_MODE_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          POINTER_MODE_KEY = (unsigned int)ret;
       else
@@ -67,7 +77,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("POINTER_UP_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          POINTER_UP_KEY = (unsigned int)ret;
       else
@@ -75,7 +85,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("POINTER_DOWN_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          POINTER_DOWN_KEY = (unsigned int)ret;
       else
@@ -83,7 +93,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("POINTER_RIGHT_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          POINTER_RIGHT_KEY = (unsigned int)ret;
       else
@@ -91,7 +101,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("POINTER_LEFT_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          POINTER_LEFT_KEY = (unsigned int)ret;
       else
@@ -107,7 +117,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("POINTER_SPEEDUP_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          POINTER_SPEEDUP_KEY = (unsigned int)ret;
       else
@@ -123,7 +133,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("MOUSE_LEFT_BUTTON", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          MOUSE_LEFT_BUTTON = (unsigned int)ret;
       else
@@ -131,7 +141,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("MOUSE_RIGHT_BUTTON", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          MOUSE_RIGHT_BUTTON = (unsigned int)ret;
       else
@@ -139,7 +149,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("MOUSE_MIDDLE_BUTTON", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          MOUSE_MIDDLE_BUTTON = (unsigned int)ret;
       else
@@ -147,7 +157,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("SCROLLING_MODE_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          SCROLLING_MODE_KEY = (unsigned int)ret;
       else
@@ -155,7 +165,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("SCROLLING_UP_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          SCROLLING_UP_KEY = (unsigned int)ret;
       else
@@ -163,7 +173,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("SCROLLING_DOWN_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          SCROLLING_DOWN_KEY = (unsigned int)ret;
       else
@@ -171,7 +181,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("SCROLLING_RIGHT_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          SCROLLING_RIGHT_KEY = (unsigned int)ret;
       else
@@ -179,7 +189,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("SCROLLING_LEFT_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          SCROLLING_LEFT_KEY = (unsigned int)ret;
       else
@@ -195,7 +205,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("SCROLLING_SPEEDUP_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
          SCROLLING_SPEEDUP_KEY = (unsigned int)ret;
       else
@@ -211,7 +221,7 @@ static void set_value(char const *name, char const *value)
    }
    else if (strcmp("PASS_THROUGH_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, value);
+      ret = keyname_to_keycode(value);
       if (ret != -1)
       {
          PASS_THROUGH_KEY[pass_through_key_count] = (unsigned int)ret;
