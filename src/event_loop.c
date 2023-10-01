@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <string.h>
 #include <stdbool.h>
 #include <errno.h>
 
@@ -13,23 +15,27 @@
 //     /7(=)\_
 // VermouthMoth
 
-#define RELEASE   0
-#define PRESS     1
-#define HOLD_DOWN 2
+#define RELEASE             0
+#define PRESS               1
+#define HOLD_DOWN           2
+
+#define KEYCODES_HIST_MAX 256
 
 bool *keydown_flags;
+
+unsigned int keycodes_hist[KEYCODES_HIST_MAX];
 
 void uinput_write_event(unsigned int type, unsigned int code, int value)
 {
    int ret;
    ret = libevdev_uinput_write_event(uidev, type, code, value);
    if (ret < 0)
-      cleanup("[E] failed to write event", ret);
+      cleanup("[E] failed to write event", ret, false);
 
    // tell the device's listeners that the event is coming
    ret = libevdev_uinput_write_event(uidev, EV_SYN, SYN_REPORT, 0);
    if (ret < 0)
-      cleanup("[E] failed to write event", ret);
+      cleanup("[E] failed to write event", ret, false);
 }
 
 static void check_keydown(struct input_event ev)
@@ -51,9 +57,43 @@ static void check_keydown(struct input_event ev)
    }
 }
 
+static void update_history(struct input_event ev)
+{
+   if ((ev.type == EV_KEY)
+    && (ev.value == PRESS))
+   {
+      // KEY_A, KEY_B, KEY_C, ..., KEY_Y, KEY_Z
+      // -> KEY_NEW, KEY_A, KEY_B, ..., KEY_Y
+      memmove(&keycodes_hist[1],
+              &keycodes_hist[0],
+              sizeof(keycodes_hist) - sizeof(keycodes_hist[0]));
+      keycodes_hist[0] = ev.code;
+   }
+}
+
+static void check_termination()
+{
+   unsigned int kill_magic[] = {KEY_L,
+                                KEY_L,
+                                KEY_I,
+                                KEY_K,
+                                POINTER_MODE_KEY};
+
+   int ret = memcmp(&keycodes_hist[0],
+                    &kill_magic[0],
+                    sizeof(kill_magic));
+   if (ret == 0)
+   {
+      printf("[I] terminate the marionette...\n");
+      cleanup("oh yea", 0xC00010FF, true);
+   }
+}
+
 static void handle_event(struct input_event ev)
 {
    check_keydown(ev);
+   update_history(ev);
+   check_termination();
 
    if (ev.type == EV_KEY
     && (ev.code == POINTER_MODE_KEY || ev.code == SCROLLING_MODE_KEY))
@@ -138,5 +178,5 @@ void event_loop(void)
          || ret == LIBEVDEV_READ_STATUS_SUCCESS
          || ret == -EAGAIN); // no events available at this time
 
-   cleanup("[E] failed to handle event", ret);
+   cleanup("[E] failed to handle event", ret, false);
 }

@@ -29,17 +29,20 @@ static unsigned int const evrels_to_enable[]
 static unsigned int const evkeys_to_enable[]
                = {BTN_LEFT, BTN_RIGHT, BTN_MIDDLE};
 
-void cleanup(char *msg, int ret)
+void cleanup(char *msg, int ret, bool exit_status)
 {
-   // what about normal termination? i don't care...
-   fprintf(stderr, "%s: %s\n", msg, strerror(-ret));
-
    libevdev_uinput_destroy(uidev);
    libevdev_free(dev);
    close(fd);
    free(keydown_flags);
 
-   exit(EXIT_FAILURE);
+   if (exit_status == false)
+   {
+      fprintf(stderr, "%s: %s\n", msg, strerror(-ret));
+      exit(EXIT_FAILURE);
+   }
+   else
+      exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char *argv[])
@@ -64,7 +67,7 @@ int main(int argc, char *argv[])
    int ret;
    ret = libevdev_new_from_fd(fd, &dev);
    if (ret < 0)
-      cleanup("[E] failed to initiate libevdev", ret);
+      cleanup("[E] failed to initiate libevdev", ret, false);
 
    // wait a bit to avoid unnecessary trouble
    // hope all the keys are released during this time...
@@ -74,7 +77,7 @@ int main(int argc, char *argv[])
    // which will be newly created a little later
    ret = libevdev_grab(dev, LIBEVDEV_GRAB);
    if (ret < 0)
-      cleanup("[E] failed to grab device", ret);
+      cleanup("[E] failed to grab device", ret, false);
 
    // force enable the following event codes
    // to make uinput device inherit them
@@ -84,7 +87,7 @@ int main(int argc, char *argv[])
       ret = libevdev_enable_event_code(dev, EV_REL,
                                        evrels_to_enable[i], NULL);
       if (ret < 0)
-         cleanup("[E] failed to enable event code", ret);
+         cleanup("[E] failed to enable event code", ret, false);
    }
    for (int i = 0; i < sizeof(evkeys_to_enable)/sizeof(unsigned int); i++)
    {
@@ -92,13 +95,13 @@ int main(int argc, char *argv[])
       ret = libevdev_enable_event_code(dev, EV_KEY,
                                        evkeys_to_enable[i], NULL);
       if (ret < 0)
-         cleanup("[E] failed to enable event code", ret);
+         cleanup("[E] failed to enable event code", ret, false);
    }
 
    ret = libevdev_uinput_create_from_device(dev,
                                     LIBEVDEV_UINPUT_OPEN_MANAGED, &uidev);
    if (ret < 0)
-      cleanup("[E] failed to create uinput device", ret);
+      cleanup("[E] failed to create uinput device", ret, false);
 
    char const *uidev_syspath;
    uidev_syspath = libevdev_uinput_get_syspath(uidev);
