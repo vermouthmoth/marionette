@@ -42,7 +42,10 @@ void cleanup(char *msg, int ret, bool exit_status)
       exit(EXIT_FAILURE);
    }
    else
+   {
+      fprintf(stdout, "%s\n", msg);
       exit(EXIT_SUCCESS);
+   }
 }
 
 int main(int argc, char *argv[])

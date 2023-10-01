@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
 #include <errno.h>
@@ -83,10 +82,7 @@ static void check_termination()
                     &kill_magic[0],
                     sizeof(kill_magic));
    if (ret == 0)
-   {
-      printf("[I] terminate the marionette...\n");
-      cleanup("oh yea", 0xC00010FF, true);
-   }
+      cleanup("[I] terminate the marionette...", 0xC0010FF, true);
 }
 
 static void handle_event(struct input_event ev)
