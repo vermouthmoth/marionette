@@ -50,168 +50,168 @@ int SCROLLING_SPEEDUP_FACTOR = 1;
 unsigned int PASS_THROUGH_KEY[PASS_THROUGH_KEY_MAX];
 int pass_through_key_count;
 
-static void set_value(xmlChar const *name, xmlChar const *value)
+static void set_value(char const *name, char const *value)
 {
    int ret;
-   if (strcmp("DEVICE", (char const *)name) == 0)
+   if (strcmp("DEVICE", name) == 0)
    {
-      DEVICE = strdup((char const *)value);
+      DEVICE = strdup(value);
    }
-   else if (strcmp("POINTER_MODE_KEY", (char const *)name) == 0)
+   else if (strcmp("POINTER_MODE_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          POINTER_MODE_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("POINTER_UP_KEY", (char const *)name) == 0)
+   else if (strcmp("POINTER_UP_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          POINTER_UP_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("POINTER_DOWN_KEY", (char const *)name) == 0)
+   else if (strcmp("POINTER_DOWN_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          POINTER_DOWN_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("POINTER_RIGHT_KEY", (char const *)name) == 0)
+   else if (strcmp("POINTER_RIGHT_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          POINTER_RIGHT_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("POINTER_LEFT_KEY", (char const *)name) == 0)
+   else if (strcmp("POINTER_LEFT_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          POINTER_LEFT_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("POINTER_MOVEMENT_SPEED", (char const *)name) == 0)
+   else if (strcmp("POINTER_MOVEMENT_SPEED", name) == 0)
    {
-      ret = atoi((char const *)value);
+      ret = atoi(value);
       if (ret != 0)
          POINTER_MOVEMENT_SPEED = ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("POINTER_SPEEDUP_KEY", (char const *)name) == 0)
+   else if (strcmp("POINTER_SPEEDUP_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          POINTER_SPEEDUP_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("POINTER_SPEEDUP_FACTOR", (char const *)name) == 0)
+   else if (strcmp("POINTER_SPEEDUP_FACTOR", name) == 0)
    {
-      ret = atoi((char const *)value);
+      ret = atoi(value);
       if (ret != 0)
          POINTER_SPEEDUP_FACTOR = ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("MOUSE_LEFT_BUTTON", (char const *)name) == 0)
+   else if (strcmp("MOUSE_LEFT_BUTTON", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          MOUSE_LEFT_BUTTON = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("MOUSE_RIGHT_BUTTON", (char const *)name) == 0)
+   else if (strcmp("MOUSE_RIGHT_BUTTON", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          MOUSE_RIGHT_BUTTON = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("MOUSE_MIDDLE_BUTTON", (char const *)name) == 0)
+   else if (strcmp("MOUSE_MIDDLE_BUTTON", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          MOUSE_MIDDLE_BUTTON = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("SCROLLING_MODE_KEY", (char const *)name) == 0)
+   else if (strcmp("SCROLLING_MODE_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          SCROLLING_MODE_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("SCROLLING_UP_KEY", (char const *)name) == 0)
+   else if (strcmp("SCROLLING_UP_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          SCROLLING_UP_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("SCROLLING_DOWN_KEY", (char const *)name) == 0)
+   else if (strcmp("SCROLLING_DOWN_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          SCROLLING_DOWN_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("SCROLLING_RIGHT_KEY", (char const *)name) == 0)
+   else if (strcmp("SCROLLING_RIGHT_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          SCROLLING_RIGHT_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("SCROLLING_LEFT_KEY", (char const *)name) == 0)
+   else if (strcmp("SCROLLING_LEFT_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          SCROLLING_LEFT_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("SCROLLING_SPEED", (char const *)name) == 0)
+   else if (strcmp("SCROLLING_SPEED", name) == 0)
    {
-      ret = atoi((char const *)value);
+      ret = atoi(value);
       if (ret != 0)
          SCROLLING_SPEED = ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("SCROLLING_SPEEDUP_KEY", (char const *)name) == 0)
+   else if (strcmp("SCROLLING_SPEEDUP_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
          SCROLLING_SPEEDUP_KEY = (unsigned int)ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("SCROLLING_SPEEDUP_FACTOR", (char const *)name) == 0)
+   else if (strcmp("SCROLLING_SPEEDUP_FACTOR", name) == 0)
    {
-      ret = atoi((char const *)value);
+      ret = atoi(value);
       if (ret != 0)
          SCROLLING_SPEEDUP_FACTOR = ret;
       else
          printf("[E] %-25s  failed\n", "");
    }
-   else if (strcmp("PASS_THROUGH_KEY", (char const *)name) == 0)
+   else if (strcmp("PASS_THROUGH_KEY", name) == 0)
    {
-      ret = libevdev_event_code_from_name(EV_KEY, (char const *)value);
+      ret = libevdev_event_code_from_name(EV_KEY, value);
       if (ret != -1)
       {
          PASS_THROUGH_KEY[pass_through_key_count] = (unsigned int)ret;
@@ -250,7 +250,8 @@ static void parse_and_load(xmlTextReaderPtr reader)
                if (attr_value != NULL)
                {
                   printf("[I] %-25s: %s\n", attrs[i], attr_value);
-                  set_value(attrs[i], attr_value);
+                  set_value((char const *)attrs[i],
+                            (char const *)attr_value);
                }
             }
          }
@@ -263,7 +264,7 @@ static void parse_and_load(xmlTextReaderPtr reader)
        && (xmlTextReaderDepth(reader) == SETTING_VALUE_DEPTH))
       {
          printf("[I] %-25s: %s\n", name, value);
-         set_value(name, value);
+         set_value((char const *)name, (char const *)value);
       }
    } while (xmlTextReaderRead(reader) == 1);
 }
