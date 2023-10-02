@@ -85,6 +85,16 @@ static void check_termination()
       cleanup("[I] terminate the marionette...", 0xC0010FF, true);
 }
 
+static void pass_through(struct input_event ev, int mode)
+{
+   for (int i = 0; i < pass_through_keys_count; i++)
+   {
+      if ((pass_through_keys[i].mode == mode)
+       && (pass_through_keys[i].keycode == ev.code))
+         uinput_write_event(ev.type, ev.code, ev.value);
+   }
+}
+
 static void handle_event(struct input_event ev)
 {
    check_keydown(ev);
@@ -132,27 +142,10 @@ static void handle_event(struct input_event ev)
             uinput_write_event(EV_KEY, BTN_MIDDLE, ev.value);
       }
 
-      // pass through
       if (keydown_flags[POINTER_MODE_KEY])
-      {
-         for (int i = 0; i < pass_through_keys_count; i++)
-         {
-            if ((pass_through_keys[i].mode == POINTER_MODE)
-             && (pass_through_keys[i].keycode == ev.code))
-               uinput_write_event(ev.type, ev.code, ev.value);
-         }
-      }
-      
-      // pass through
+         pass_through(ev, POINTER_MODE);
       if (keydown_flags[SCROLLING_MODE_KEY])
-      {
-         for (int i = 0; i < pass_through_keys_count; i++)
-         {
-            if ((pass_through_keys[i].mode == SCROLLING_MODE)
-             && (pass_through_keys[i].keycode == ev.code))
-               uinput_write_event(ev.type, ev.code, ev.value);
-         }
-      }
+         pass_through(ev, SCROLLING_MODE);
    }
    else
    {
