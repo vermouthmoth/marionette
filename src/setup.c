@@ -43,6 +43,9 @@ int SCROLLING_SPEEDUP_FACTOR = 1;
 PassThroughKey pass_through_keys[PASS_THROUGH_KEY_MAX];
 int pass_through_keys_count;
 
+RemapKey remap_keys[REMAP_KEY_MAX];
+int remap_keys_count;
+
 static int keyname_to_keycode(char const *keyname)
 {
    return libevdev_event_code_from_name(EV_KEY, keyname);
@@ -134,6 +137,28 @@ static void set_pass_through_key(char const *keyname,
       printf("[E] %-25s  failed\n", "");
 }
 
+static void set_remap_key(char const *keyname_in,
+                          char const *keyname_out,
+                          int mode)
+{
+   printf("[I] %-25s: %s -> %s\n", "REMAP", keyname_in, keyname_out);
+
+   int in;
+   in = keyname_to_keycode(keyname_in);
+   int out;
+   out = keyname_to_keycode(keyname_out);
+   if ((in != -1)
+    && (out != -1))
+   {
+      remap_keys[remap_keys_count].in_keycode = (unsigned int) in;
+      remap_keys[remap_keys_count].out_keycode = (unsigned int) out;
+      remap_keys[remap_keys_count].mode = mode;
+      remap_keys_count += 1;
+   }
+   else
+      printf("[E] %-25s  failed\n", "");
+}
+
 static void parse_and_load(xmlTextReaderPtr reader)
 {
    printf("[I] start loading settings...\n");
@@ -141,7 +166,8 @@ static void parse_and_load(xmlTextReaderPtr reader)
    // name -> value -> name -> value -> ... loop
    // should be guaranteed by .dtd
    xmlChar const *name;
-   unsigned int mode; // for pass through setting
+   xmlChar const *keyname_in; // for remap
+   int mode = NONE_MODE; // for pass through and remap settings
 
    do
    {
@@ -175,16 +201,39 @@ static void parse_and_load(xmlTextReaderPtr reader)
             if (value != NULL)
                set_value("SCROLLING_MODE_KEY", (char const *)value);
          }
+         else if (strcmp((char const *)name, "REMAP") == 0)
+            keyname_in = xmlTextReaderGetAttribute(reader, BAD_CAST "IN");
+      }
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_END_ELEMENT)
+      {
+         name = xmlTextReaderConstName(reader);
+
+         if ((strcmp((char const *)name, "scrolling_mode") == 0)
+          || (strcmp((char const *)name, "pointer_mode") == 0))
+            mode = NONE_MODE;
       }
       else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_TEXT)
       {
          xmlChar const *value = xmlTextReaderConstValue(reader);
-         if (value != NULL)
+
+         if (strcmp((char const *)name, "PASS_THROUGH_KEY") == 0)
          {
-            if (strcmp((char const *)name, "PASS_THROUGH_KEY") == 0)
-               set_pass_through_key((char const *)value,
-                                    mode);
-            else
+            if (value != NULL)
+               set_pass_through_key((char const *)value, mode);
+         }
+         else if (strcmp((char const *)name, "REMAP") == 0)
+         {
+            if ((value != NULL)
+             && (keyname_in != NULL))
+               set_remap_key((char const *)keyname_in,
+                             (char const *)value,
+                             mode);
+         }
+         else
+         {
+            xmlChar const *value = xmlTextReaderConstValue(reader);
+            if ((name != NULL)
+             && (value != NULL))
                set_value((char const *)name, (char const *)value);
          }
       }

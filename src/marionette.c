@@ -100,6 +100,13 @@ int main(int argc, char *argv[])
       if (ret < 0)
          cleanup("[E] failed to enable event code", ret, false);
    }
+   for (int i = 0; i < remap_keys_count; i++)
+   {
+      ret = libevdev_enable_event_code(dev, EV_KEY,
+                                       remap_keys[i].in_keycode, NULL);
+      if (ret < 0)
+         cleanup("[E] failed to enable event code", ret, false);
+   }
 
    ret = libevdev_uinput_create_from_device(dev,
                                     LIBEVDEV_UINPUT_OPEN_MANAGED, &uidev);

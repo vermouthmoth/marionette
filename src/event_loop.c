@@ -95,6 +95,22 @@ static void pass_through(struct input_event ev, int mode)
    }
 }
 
+static bool remap(struct input_event ev, int mode)
+{
+   bool ret = false;
+   for (int i = 0; i < remap_keys_count; i++)
+   {
+      if ((remap_keys[i].mode == mode)
+       && (remap_keys[i].in_keycode == ev.code))
+      {
+         uinput_write_event(ev.type, remap_keys[i].out_keycode, ev.value);
+         ret = true;
+      }
+   }
+
+   return ret;
+}
+
 static void handle_event(struct input_event ev)
 {
    check_keydown(ev);
@@ -143,14 +159,21 @@ static void handle_event(struct input_event ev)
       }
 
       if (keydown_flags[POINTER_MODE_KEY])
+      {
          pass_through(ev, POINTER_MODE);
+         remap(ev, POINTER_MODE);
+      }
       if (keydown_flags[SCROLLING_MODE_KEY])
+      {
          pass_through(ev, SCROLLING_MODE);
+         remap(ev, SCROLLING_MODE);
+      }
    }
    else
    {
-      // let the event pass by as it comes
-      uinput_write_event(ev.type, ev.code, ev.value);
+      if (!remap(ev, NONE_MODE))
+         // let the event pass by as it comes
+         uinput_write_event(ev.type, ev.code, ev.value);
    }
 }
 

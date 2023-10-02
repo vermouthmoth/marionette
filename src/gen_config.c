@@ -22,7 +22,7 @@
 #if defined(LIBXML_TREE_ENABLED) && defined(LIBXML_OUTPUT_ENABLED)
 
 #define PROPS_POINTER_MODE   12
-#define PROPS_SCROLLING_MODE  7
+#define PROPS_SCROLLING_MODE  9
 
 static char *props_name_pointer_mode[PROPS_POINTER_MODE]
                   = {"POINTER_UP_KEY",
@@ -59,7 +59,9 @@ static char *props_name_scrolling_mode[PROPS_SCROLLING_MODE]
                      "SCROLLING_LEFT_KEY",
                      "SCROLLING_SPEED",
                      "SCROLLING_SPEEDUP_KEY",
-                     "SCROLLING_SPEEDUP_FACTOR"};
+                     "SCROLLING_SPEEDUP_FACTOR",
+                     "REMAP",
+                     "REMAP"};
 
 static char *props_value_scrolling_mode[PROPS_SCROLLING_MODE]
                   = {"KEY_W",
@@ -68,7 +70,9 @@ static char *props_value_scrolling_mode[PROPS_SCROLLING_MODE]
                      "KEY_A",
                      "25",
                      "KEY_SLASH",
-                     "2"};
+                     "2",
+                     "KEY_PAGEUP",
+                     "KEY_PAGEDOWN"};
 
 int main(int argc, char *argv[])
 {
@@ -111,9 +115,22 @@ int main(int argc, char *argv[])
                               BAD_CAST "KEY_RIGHTSHIFT");
    for (int i = 0; i < PROPS_SCROLLING_MODE; i++)
    {
-      xmlNewChild(scrolling_node, NULL, BAD_CAST props_name_scrolling_mode[i],
-                                        BAD_CAST props_value_scrolling_mode[i]);
+      xmlNodePtr node = xmlNewChild(scrolling_node,
+                                    NULL,
+                                    BAD_CAST props_name_scrolling_mode[i],
+                                    BAD_CAST props_value_scrolling_mode[i]);
+      if (i == 7)
+         xmlNewProp(node, BAD_CAST "IN", BAD_CAST "KEY_E");
+      if (i == 8)
+         xmlNewProp(node, BAD_CAST "IN", BAD_CAST "KEY_Q");
+
    }
+
+   xmlNodePtr node = xmlNewChild(root_node,
+                                 NULL,
+                                 BAD_CAST "REMAP",
+                                 BAD_CAST "KEY_ESC");
+   xmlNewProp(node, BAD_CAST "IN", BAD_CAST "KEY_CAPSLOCK");
 
    xmlSaveFormatFileEnc("-", doc, "ASCII", 1);
 
