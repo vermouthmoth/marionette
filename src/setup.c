@@ -60,10 +60,20 @@ static void set_keycode(unsigned int *setting_item,
 {
    int ret;
    ret = keyname_to_keycode(setting_value);
-      if (ret != -1)
-         *setting_item = (unsigned int)ret;
-      else
-         printf("[E] %-25s  failed\n", "");
+   if (ret != -1)
+      *setting_item = (unsigned int)ret;
+   else
+      printf("[E] %-25s  failed\n", "");
+}
+
+static void set_integer(int *setting_item, char const *setting_value)
+{
+   int ret;
+   ret = atoi(setting_value);
+   if (ret != 0)
+      *setting_item = ret;
+   else
+      printf("[E] %-25s  failed\n", "");
 }
 
 static void set_value(char const *name, char const *value)
@@ -82,23 +92,11 @@ static void set_value(char const *name, char const *value)
    else if (strcmp("POINTER_LEFT_KEY", name) == 0)
       set_keycode(&POINTER_LEFT_KEY, value);
    else if (strcmp("POINTER_MOVEMENT_SPEED", name) == 0)
-   {
-      ret = atoi(value);
-      if (ret != 0)
-         POINTER_MOVEMENT_SPEED = ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_integer(&POINTER_MOVEMENT_SPEED, value);
    else if (strcmp("POINTER_SPEEDUP_KEY", name) == 0)
       set_keycode(&POINTER_SPEEDUP_KEY, value);
    else if (strcmp("POINTER_SPEEDUP_FACTOR", name) == 0)
-   {
-      ret = atoi(value);
-      if (ret != 0)
-         POINTER_SPEEDUP_FACTOR = ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_integer(&POINTER_SPEEDUP_FACTOR, value);
    else if (strcmp("MOUSE_LEFT_BUTTON", name) == 0)
       set_keycode(&MOUSE_LEFT_BUTTON, value);
    else if (strcmp("MOUSE_RIGHT_BUTTON", name) == 0)
@@ -116,23 +114,11 @@ static void set_value(char const *name, char const *value)
    else if (strcmp("SCROLLING_LEFT_KEY", name) == 0)
       set_keycode(&SCROLLING_LEFT_KEY, value);
    else if (strcmp("SCROLLING_SPEED", name) == 0)
-   {
-      ret = atoi(value);
-      if (ret != 0)
-         SCROLLING_SPEED = ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_integer(&SCROLLING_SPEED, value);
    else if (strcmp("SCROLLING_SPEEDUP_KEY", name) == 0)
       set_keycode(&SCROLLING_SPEEDUP_KEY, value);
    else if (strcmp("SCROLLING_SPEEDUP_FACTOR", name) == 0)
-   {
-      ret = atoi(value);
-      if (ret != 0)
-         SCROLLING_SPEEDUP_FACTOR = ret;
-      else
-         printf("[E] %-25s  failed\n", "");
-   }
+      set_integer(&SCROLLING_SPEEDUP_FACTOR, value);
    else if (strcmp("PASS_THROUGH_KEY", name) == 0)
    {
       ret = keyname_to_keycode(value);
