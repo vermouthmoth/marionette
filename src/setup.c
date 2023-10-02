@@ -91,12 +91,8 @@ static void set_value(char const *name, char const *value)
       set_keycode(&POINTER_RIGHT_KEY, value);
    else if (strcmp("POINTER_LEFT_KEY", name) == 0)
       set_keycode(&POINTER_LEFT_KEY, value);
-   else if (strcmp("POINTER_MOVEMENT_SPEED", name) == 0)
-      set_integer(&POINTER_MOVEMENT_SPEED, value);
    else if (strcmp("POINTER_SPEEDUP_KEY", name) == 0)
       set_keycode(&POINTER_SPEEDUP_KEY, value);
-   else if (strcmp("POINTER_SPEEDUP_FACTOR", name) == 0)
-      set_integer(&POINTER_SPEEDUP_FACTOR, value);
    else if (strcmp("MOUSE_LEFT_BUTTON", name) == 0)
       set_keycode(&MOUSE_LEFT_BUTTON, value);
    else if (strcmp("MOUSE_RIGHT_BUTTON", name) == 0)
@@ -113,10 +109,14 @@ static void set_value(char const *name, char const *value)
       set_keycode(&SCROLLING_RIGHT_KEY, value);
    else if (strcmp("SCROLLING_LEFT_KEY", name) == 0)
       set_keycode(&SCROLLING_LEFT_KEY, value);
-   else if (strcmp("SCROLLING_SPEED", name) == 0)
-      set_integer(&SCROLLING_SPEED, value);
    else if (strcmp("SCROLLING_SPEEDUP_KEY", name) == 0)
       set_keycode(&SCROLLING_SPEEDUP_KEY, value);
+   else if (strcmp("POINTER_MOVEMENT_SPEED", name) == 0)
+      set_integer(&POINTER_MOVEMENT_SPEED, value);
+   else if (strcmp("SCROLLING_SPEED", name) == 0)
+      set_integer(&SCROLLING_SPEED, value);
+   else if (strcmp("POINTER_SPEEDUP_FACTOR", name) == 0)
+      set_integer(&POINTER_SPEEDUP_FACTOR, value);
    else if (strcmp("SCROLLING_SPEEDUP_FACTOR", name) == 0)
       set_integer(&SCROLLING_SPEEDUP_FACTOR, value);
    else if (strcmp("PASS_THROUGH_KEY", name) == 0)
