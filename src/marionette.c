@@ -106,12 +106,10 @@ int main(int argc, char *argv[])
    if (ret < 0)
       cleanup("[E] failed to create uinput device", ret, false);
 
-   char const *uidev_syspath;
-   uidev_syspath = libevdev_uinput_get_syspath(uidev);
-   printf("[I] syspath for uinput device: %s\n", uidev_syspath);
-   char const *uidev_devnode;
-   uidev_devnode = libevdev_uinput_get_devnode(uidev);
-   printf("[I] device node for uinput device: %s\n", uidev_devnode);
+   printf("[I] syspath for uinput device: %s\n",
+          libevdev_uinput_get_syspath(uidev));
+   printf("[I] device node for uinput device: %s\n",
+          libevdev_uinput_get_devnode(uidev));
 
    // create an array with as many elements as key codes
    // manage the current state of each key pressed or not
