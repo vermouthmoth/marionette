@@ -61,13 +61,13 @@ Config file template can be created using `gen_config`.
 ```
 $ ./gen_config > config.xml
 ```
-The name of the configuration file can be anything.
+The name of the config file can be anything.
 <details>
 <summary>Additional info</summary>
 
 `marionette` validates if the format of a given config file is valid using DTD info.  
 Valid format rules are written in `config/config.dtd`.  
-`gen_config` makes the template include `config/config.dtd`.  
+`gen_config` makes the template include `config/config.dtd` as an internal subset.  
 If you have moved the location of `gen_config` or `config/config.dtd`, instead run the following.
 ```
 $ ./gen_config /path/to/config.dtd > config.xml
@@ -131,7 +131,7 @@ PASS_THROUGH_KEY | KEY_LEFTSHIFT and KEY_LEFTCTRL <br> (in pointer mode) | Key t
 For example, to change the key assignment of `POINTER_MODE_KEY` from `KEY_RIGHTCTRL` to `KEY_RIGHTALT`, edit as follows.
 ```diff
 $ diff old.xml new.xml 
-28c28
+29c29
 <   <pointer_mode POINTER_MODE_KEY="KEY_RIGHTCTRL">
 ---
 >   <pointer_mode POINTER_MODE_KEY="KEY_RIGHTALT">
@@ -173,6 +173,22 @@ In both pointer and scrolling modes, the keyboard does not provide any output as
 To terminate the program, press the following keys in sequence.  
 `POINTER_MODE_KEY`, `K`, `I`, `L` and `L`.  
 Or, just using `Ctrl+C` or `kill` would be fine.
+
+
+<details>
+<summary>Additional info</summary>
+  
+If you want to use other remapping software or something together, you can specify the uinput device node created by this program as their input.  
+The uinput device node created by this program is printed to standard output at startup.  
+```
+[I] device node for uinput device: /dev/input/eventX
+```
+</details>
+
+## Updating
+Since this program is small, config file compatibility is not taken into account when updating.  
+If you find that a new feature is available on this page, just delete the entire directory containing the old program and `git clone` again.
+
 ___
 #### Contact
 [`0o.jx_xjzzz`](https://discordapp.com/users/1150388238037565541) on Discord  
