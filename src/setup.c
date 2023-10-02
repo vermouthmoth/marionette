@@ -15,13 +15,6 @@
 
 #ifdef LIBXML_READER_ENABLED
 
-// determined from .dtd
-#define SETTING_ROOT_DEPTH  0
-#define SETTING_MODE_DEPTH  1
-#define SETTING_NAME_DEPTH  2
-#define SETTING_VALUE_DEPTH 3
-#define SETTING_ATTRIBUTES  3
-
 char *DEVICE;
 
 // for keycode, corresponds to KEY_RESERVED at the initial value
