@@ -78,6 +78,8 @@ static void set_integer(int *setting_item, char const *setting_value)
 
 static void set_value(char const *name, char const *value)
 {
+   printf("[I] %-25s: %s\n", name, value);
+
    int ret;
    if (strcmp("DEVICE", name) == 0)
       DEVICE = strdup(value);
@@ -138,43 +140,44 @@ static void parse_and_load(xmlTextReaderPtr reader)
 
    // name -> value -> name -> value -> ... loop
    // should be guaranteed by .dtd
-   xmlChar const *attrs[SETTING_ATTRIBUTES]
-                     = {BAD_CAST "DEVICE",
-                        BAD_CAST "POINTER_MODE_KEY",
-                        BAD_CAST "SCROLLING_MODE_KEY"};
    xmlChar const *name;
+
    do
    {
-      xmlChar const *value = xmlTextReaderConstValue(reader);
-
       if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_ELEMENT)
       {
-         if ((xmlTextReaderDepth(reader) == SETTING_ROOT_DEPTH)
-          || (xmlTextReaderDepth(reader) == SETTING_MODE_DEPTH))
+         name = xmlTextReaderConstName(reader);
+
+         if (strcmp((char const *)name, "config") == 0)
          {
-            // attributes
-            for (int i  = 0; i < SETTING_ATTRIBUTES; i++)
-            {
-               xmlChar const *attr_value
-                           = xmlTextReaderGetAttribute(reader, attrs[i]);
-               if (attr_value != NULL)
-               {
-                  printf("[I] %-25s: %s\n", attrs[i], attr_value);
-                  set_value((char const *)attrs[i],
-                            (char const *)attr_value);
-               }
-            }
+            xmlChar const *value
+               = xmlTextReaderGetAttribute(reader,
+                                           BAD_CAST "DEVICE");
+            if (value != NULL)
+               set_value("DEVICE", (char const *)value);
          }
-
-         if (xmlTextReaderDepth(reader) == SETTING_NAME_DEPTH)
-            name = xmlTextReaderConstName(reader);
+         else if (strcmp((char const *)name, "pointer_mode") == 0)
+         {
+            xmlChar const *value
+               = xmlTextReaderGetAttribute(reader,
+                                           BAD_CAST "POINTER_MODE_KEY");
+            if (value != NULL)
+               set_value("POINTER_MODE_KEY", (char const *)value);
+         }
+         else if (strcmp((char const *)name, "scrolling_mode") == 0)
+         {
+            xmlChar const *value
+               = xmlTextReaderGetAttribute(reader,
+                                           BAD_CAST "SCROLLING_MODE_KEY");
+            if (value != NULL)
+               set_value("SCROLLING_MODE_KEY", (char const *)value);
+         }
       }
-
-      if ((xmlTextReaderNodeType(reader) == XML_READER_TYPE_TEXT)
-       && (xmlTextReaderDepth(reader) == SETTING_VALUE_DEPTH))
+      else if (xmlTextReaderNodeType(reader) == XML_READER_TYPE_TEXT)
       {
-         printf("[I] %-25s: %s\n", name, value);
-         set_value((char const *)name, (char const *)value);
+         xmlChar const *value = xmlTextReaderConstValue(reader);
+         if (value != NULL)
+            set_value((char const *)name, (char const *)value);
       }
    } while (xmlTextReaderRead(reader) == 1);
 }
