@@ -4,6 +4,8 @@
 // VermouthMoth
 
 #define PASS_THROUGH_KEY_MAX  256
+#define POINTER_MODE            1
+#define SCROLLING_MODE          2
 
 extern char *DEVICE;
 
@@ -29,7 +31,14 @@ extern int SCROLLING_SPEED;
 extern unsigned int SCROLLING_SPEEDUP_KEY;
 extern int SCROLLING_SPEEDUP_FACTOR;
 
-extern unsigned int PASS_THROUGH_KEY[PASS_THROUGH_KEY_MAX];
-extern int pass_through_key_count;
+typedef struct
+{
+   unsigned int keycode;
+   //char const *keyname;
+   int mode; // POINTER_MODE or SCROLLING_MODE
+} PassThroughKey;
+
+extern PassThroughKey pass_through_keys[PASS_THROUGH_KEY_MAX];
+extern int pass_through_keys_count;
 
 extern void setup(char const *file_name);

@@ -133,10 +133,25 @@ static void handle_event(struct input_event ev)
       }
 
       // pass through
-      for (int i = 0; i < pass_through_key_count; i++)
+      if (keydown_flags[POINTER_MODE_KEY])
       {
-         if (PASS_THROUGH_KEY[i] == ev.code)
-            uinput_write_event(ev.type, ev.code, ev.value);
+         for (int i = 0; i < pass_through_keys_count; i++)
+         {
+            if ((pass_through_keys[i].mode == POINTER_MODE)
+             && (pass_through_keys[i].keycode == ev.code))
+               uinput_write_event(ev.type, ev.code, ev.value);
+         }
+      }
+      
+      // pass through
+      if (keydown_flags[SCROLLING_MODE_KEY])
+      {
+         for (int i = 0; i < pass_through_keys_count; i++)
+         {
+            if ((pass_through_keys[i].mode == SCROLLING_MODE)
+             && (pass_through_keys[i].keycode == ev.code))
+               uinput_write_event(ev.type, ev.code, ev.value);
+         }
       }
    }
    else

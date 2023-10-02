@@ -40,8 +40,8 @@ int SCROLLING_SPEED = 1;
 unsigned int SCROLLING_SPEEDUP_KEY;
 int SCROLLING_SPEEDUP_FACTOR = 1;
 
-unsigned int PASS_THROUGH_KEY[PASS_THROUGH_KEY_MAX];
-int pass_through_key_count;
+PassThroughKey pass_through_keys[PASS_THROUGH_KEY_MAX];
+int pass_through_keys_count;
 
 static int keyname_to_keycode(char const *keyname)
 {
@@ -73,7 +73,6 @@ static void set_value(char const *name, char const *value)
 {
    printf("[I] %-25s: %s\n", name, value);
 
-   int ret;
    if (strcmp("DEVICE", name) == 0)
       DEVICE = strdup(value);
    else if (strcmp("POINTER_MODE_KEY", name) == 0)
@@ -114,17 +113,25 @@ static void set_value(char const *name, char const *value)
       set_integer(&POINTER_SPEEDUP_FACTOR, value);
    else if (strcmp("SCROLLING_SPEEDUP_FACTOR", name) == 0)
       set_integer(&SCROLLING_SPEEDUP_FACTOR, value);
-   else if (strcmp("PASS_THROUGH_KEY", name) == 0)
+}
+
+static void set_pass_through_key(char const *keyname,
+                                 int mode)
+{
+   printf("[I] %-25s: %s\n", "PASS_THROUGH_KEY", keyname);
+
+   int ret;
+   ret = keyname_to_keycode(keyname);
+   if (ret != -1)
    {
-      ret = keyname_to_keycode(value);
-      if (ret != -1)
-      {
-         PASS_THROUGH_KEY[pass_through_key_count] = (unsigned int)ret;
-         pass_through_key_count += 1;
-      }
-      else
-         printf("[E] %-25s  failed\n", "");
+      pass_through_keys[pass_through_keys_count].keycode
+         = (unsigned int)ret;
+      pass_through_keys[pass_through_keys_count].mode
+         = mode;
+      pass_through_keys_count += 1;
    }
+   else
+      printf("[E] %-25s  failed\n", "");
 }
 
 static void parse_and_load(xmlTextReaderPtr reader)
@@ -134,6 +141,7 @@ static void parse_and_load(xmlTextReaderPtr reader)
    // name -> value -> name -> value -> ... loop
    // should be guaranteed by .dtd
    xmlChar const *name;
+   unsigned int mode; // for pass through setting
 
    do
    {
@@ -154,6 +162,7 @@ static void parse_and_load(xmlTextReaderPtr reader)
             xmlChar const *value
                = xmlTextReaderGetAttribute(reader,
                                            BAD_CAST "POINTER_MODE_KEY");
+            mode = POINTER_MODE;
             if (value != NULL)
                set_value("POINTER_MODE_KEY", (char const *)value);
          }
@@ -162,6 +171,7 @@ static void parse_and_load(xmlTextReaderPtr reader)
             xmlChar const *value
                = xmlTextReaderGetAttribute(reader,
                                            BAD_CAST "SCROLLING_MODE_KEY");
+            mode = SCROLLING_MODE;
             if (value != NULL)
                set_value("SCROLLING_MODE_KEY", (char const *)value);
          }
@@ -170,7 +180,13 @@ static void parse_and_load(xmlTextReaderPtr reader)
       {
          xmlChar const *value = xmlTextReaderConstValue(reader);
          if (value != NULL)
-            set_value((char const *)name, (char const *)value);
+         {
+            if (strcmp((char const *)name, "PASS_THROUGH_KEY") == 0)
+               set_pass_through_key((char const *)value,
+                                    mode);
+            else
+               set_value((char const *)name, (char const *)value);
+         }
       }
    } while (xmlTextReaderRead(reader) == 1);
 }
