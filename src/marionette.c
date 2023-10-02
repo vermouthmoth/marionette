@@ -123,7 +123,5 @@ int main(int argc, char *argv[])
    // no plans to return
    pthread_detach(mouse_loop_thread);
 
-   // also no plans to return without failure...
-   // just use Ctrl+C or kill command to terminate
    event_loop();
 }
